@@ -1,0 +1,10 @@
+# for testing or deployment, create another file (requirements-dev.txt)
+# pip install -r requirements.txt
+# exact libraries version number can also be used for versioning e.g. flask==1.0.1 or flask>=1.1.2,<2.0
+
+flask
+wtforms
+email_validator
+matplotlib
+numpy
+pandas
