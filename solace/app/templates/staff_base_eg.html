@@ -1,0 +1,18 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+<!-- Insert Any Static CSS You Need Here -->
+<!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+{% endblock %}
+{% block title %} 
+<!-- Insert Any Title You Want Here -->
+{% endblock %}
+
+{% block content %}
+<style>
+    /* REFER to staff nav html and look for your corresponding tab class to add: */
+    /* Eg. .acc-tab refers to the tab in the navigation for account management */
+    .acc-tab { background-color: var(--theme-cream); }
+</style>
+
+ <h1 class="text-center">Insert Your Content Here!</h1>
+{% endblock %}
