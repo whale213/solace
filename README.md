@@ -125,7 +125,7 @@ Updates an item in the table in the database.
 ### Delete By Id From Table
 
 ```python
-delete_by_id_from_table(self, table_name: str, id: int)
+delete_by_id_from_table(self, table_name: str, id_name: str, id: int)
 ```
 
 #### Description
@@ -133,6 +133,7 @@ Deletes an item from a specified table in the database based on a given unique i
 
 #### Parameters
 - table_name: String value of table name to delete item
+- id_name: String value of named id header in table
 - id: Integer value of unique id of item
 
 #### Return / Output 

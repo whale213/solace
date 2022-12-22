@@ -90,9 +90,9 @@ class Thriftstore:
             print(exc)
 
         
-    def delete_by_id_from_table(self, table_name: str, id: int) -> None:
+    def delete_by_id_from_table(self, table_name: str, id_name: str, id: int) -> None:
         try:
-            delete_id_query = f"DELETE FROM {table_name} WHERE id=?"
+            delete_id_query = f"DELETE FROM {table_name} WHERE {id_name}=?"
             self.__cur.execute(delete_id_query, (id,))
             self.__con.commit()
             print(f"Successfully deleted item id of: {id} from {table_name} table.")
