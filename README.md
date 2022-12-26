@@ -250,7 +250,29 @@ Retrieves all items from a specified table in a specified order
 - returns a list of tuple items in order
 - returns None during exceptions
 
-## Simple Example Case of Usage
+### Foreign Key Query
+
+```python
+def foreign_key_query(self, t_name_one: str, t_name_two: str, fk_name: str, pk_name: str, select_values: list, type_of_join: str, specifc_query: str) -> list:
+```
+
+#### Description
+Retrieves all items depending on foreign key query between two relational tables
+
+#### Parameters
+- t_name_one: One of the tables in relation to the other table
+- t_name_two: The other specified table in the relation
+- fk_name: String name of foreign key of table with primary key
+- pk_name: String name of primary key of table without foreign key
+- select_values: A list of values to be selected in the query
+- type_of_join: Can be **JOIN**, **LEFT JOIN**, **INNER JOIN** depending on desired results of query
+- specific_query: Specifications such as GROUP BY, WHERE, etc.
+
+#### Return / Output 
+- returns a specified list of tuple items dependent on query
+- returns None during exceptions
+
+## Simple Example Case of Usage (Primary Key Only)
 
 ### Book Class
 ```python
@@ -316,26 +338,143 @@ The following is an implementation of the most common usage methods used at once
 
 ```python
 # In Your Main Compiling File:
-from models import Thriftstore
-from models import Book
+db = Thriftstore()
+db.create_table(bookTable)
+db.insert_into_table(book_insert_query, b1)
+db.insert_into_table(book_insert_query, b2)
+db.insert_into_table(book_insert_query, b3)
+db.update_table_item(book_update_query)
 
-if __name__ == "__main__":
-    db = Thriftstore()
-    db.create_table(bookTable)
-    db.insert_into_table(book_insert_query, b1)
-    db.insert_into_table(book_insert_query, b2)
-    db.insert_into_table(book_insert_query, b3)
-    db.update_table_item(book_update_query)
+# returns a list of tuples matching the custom query
+# print to view return value in console.
+print(db.get_item_by_custom_value(get_custom_query, 125))
 
-    # returns a list of tuples matching the custom query
-    # print to view return value in console.
-    print(db.get_item_by_custom_value(get_custom_query, 125))
-
-    '''
-    A MUST USE at the end of every user session after all db operations are completed:
-    '''
-    db.close_connection()
+'''
+A MUST USE at the end of every user session after all db operations are completed:
+'''
+db.close_connection()
 ```
+## Simple Example Case of Usage (Primary And Foreign Key)
+
+### Student Class
+```python
+class Student:
+    def __init__(self, stud_id, name, admin_no, grp_id) -> None:
+        self.__student_id = stud_id
+        self.__name = name
+        self.__admin_no = admin_no
+        self.__group_id = grp_id
+```
+
+### Group Class
+```python
+class Group:
+    def __init__(self, grp_id, name, topic_chosen) -> None:
+        self.__group_id = grp_id
+        self.__name = name
+        self.__topic_chosen = topic_chosen
+```
+
+### Instances 
+```python
+# Creating Students
+s1 = Student(1, "Tom", "202212E", 1)
+s2 = Student(2, "Alice", "202276B", 1)
+s3 = Student(3, "David", "202182Z", 2)
+s4 = Student(4, "Sam", "202232A", 2)
+
+# Creating Groups
+g1 = Group(1, "Team 1", "Python")
+g2 = Group(2, "Team 2", "Java")
+```
+
+### Queries
+
+#### Creating
+```python
+studentTableAttributes = """
+    student_id INT PRIMARY KEY,
+    name CHAR(25) NOT NULL,
+    admin_no CHAR(7) NOT NULL,
+    group_id INT REFERENCES Groups(group_id)
+"""
+
+groupTableAttributes = """
+    group_id INT PRIMARY KEY,
+    name CHAR(25) NOT NULL,
+    topic_chosen CHAR(25) NOT NULL
+"""
+```
+
+
+#### Inserting
+```python
+insert_query_student = """INSERT INTO Students(
+    student_id,
+    name,
+    admin_no,
+    group_id)
+    VALUES(?, ?, ?, ?);
+"""
+
+insert_query_group = """INSERT INTO Groups(
+    group_id,
+    name,
+    topic_chosen)
+    VALUES(?, ?, ?);
+"""
+```
+
+### Implementation With Database Methods
+```python
+# In Your Main Compiling File
+db = Thriftstore()
+
+# Creating Tables
+db.create_table("Students", studentTableAttributes)
+db.create_table("Groups", groupTableAttributes)
+
+# Adding Students 
+db.insert_into_table(insert_query_student, s1)
+db.insert_into_table(insert_query_student, s2)
+db.insert_into_table(insert_query_student, s3)
+db.insert_into_table(insert_query_student, s4)
+
+# Adding Groups
+db.insert_into_table(insert_query_group, g1)
+db.insert_into_table(insert_query_group, g2)
+
+# Foreign Key Queries Examples
+
+# Returns the number of students in each group
+print(db.foreign_key_query(
+    t_name_one="Groups",
+    t_name_two="Students",
+    fk_name= "group_id",
+    pk_name= "group_id",
+    select_values= ["Groups.name", "COUNT(Students.student_id)"],
+    type_of_join= "LEFT JOIN",
+    specifc_query= "GROUP BY Groups.group_id"
+))
+
+# Returns: [('Team 1', 2), ('Team 2', 2)]
+
+# Returns all admin numbers who are under the topic of "Java"
+print(db.foreign_key_query(
+    t_name_one="Students",
+    t_name_two="Groups",
+    fk_name= "group_id",
+    pk_name= "group_id",
+    select_values= ["Students.admin_no"],
+    type_of_join= "JOIN",
+    specifc_query= "WHERE Groups.topic_chosen = 'Java'"
+))
+
+# Returns : [('202182Z',), ('202232A',)]
+
+db.close_connection()
+```
+
 ## Additional Tips
 
 ### Viewing Changes In Database

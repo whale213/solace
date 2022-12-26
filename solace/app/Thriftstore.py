@@ -153,20 +153,8 @@ class Thriftstore:
             return None
         except Exception as exc:
             print(exc)
-            return None
-
-    '''
-    Getters for connection and cursor to 
-    perform or make custom query methods not defined
-    in the Thriftstore database model class
-    '''
-    def get_cursor(self):
-        return self.__cur
+            return None    
     
-    def get_connection(self):
-        return self.__con
-
-    # Methods (3): Additional Methods
 
     def get_ordered_by_custom_value(self, table_name: str, custom_value: str, order_type: str) -> list:
         try:
@@ -180,4 +168,51 @@ class Thriftstore:
         except Exception as exc:
             print(exc)
             return None
+
+    '''
+    Getters for connection and cursor to 
+    perform or make custom query methods not defined
+    in the Thriftstore database model class
+    '''
+    def get_cursor(self):
+        return self.__cur
+    
+    def get_connection(self):
+        return self.__con
+
+    '''
+    This is a generic foreign key query function where
+    it will take as many possible arguements to produce
+    the desired outcomes of any possible foreign key query
+
+    Note: can be extremely confusing on how to use hence,
+    please refer to the database README files for examples.
+    '''
+    # Methods (3): Foreign Key Queries
+    
+    def foreign_key_query(self, t_name_one: str, t_name_two: str, fk_name: str, pk_name: str, select_values: list, type_of_join: str, specifc_query: str) -> list:
+        try:
+            # Conversion steps:
+            # 1: str(lst) converts the list to a str
+            # 2: [1:-1] rids the list brackets 
+            # 3: replace("'", "") removes the quotes to fit the query syntax
+            
+            # Specific query refers to the generic queries possible for instance:
+            # WHERE, GROUP, etc.
+            fk_query = f"""SELECT {str(select_values)[1:-1].replace("'", "")} 
+                    FROM {t_name_one} {type_of_join} {t_name_two} 
+                    ON {t_name_one+"."+fk_name} = {t_name_two+"."+pk_name} {specifc_query}
+                """
+            allData = self.__cur.execute(fk_query)
+            return allData.fetchall()
+        except sqlite3.Error as e:
+            print("Foreign key query error: ", "".join(e.args))
+            return None
+        except Exception as exc:
+            print(exc)
+            return None
+
+
+
+
     
