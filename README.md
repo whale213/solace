@@ -47,20 +47,20 @@ Used at the end of a session after all query operations have been completed, to 
 ### Create Table
 
 ```python
-create_table(self, table: str)
+create_table(self, table_name: str, table_str: str)
 ```
 
 #### Description
 Creates a table in the database.
 
 #### Parameters
-- table: an sql create table query surrounded by "" or """
+- table_name: String name of the table
+- table_str: an sql create table query surrounded by "" or """
     - should contain:
-        1. The name of the table
-        2. The column headers in order
-        3. Specifications of data types for headers
-        4. Maximum value count of certain types (if applicable)
-        5. **Specifcation of Primary and Foreign keys**
+        1. The column headers in order
+        2. Specifications of data types for headers
+        3. Maximum value count of certain types (if applicable)
+        4. **Specifcation of Primary and Foreign keys**
 
 #### Resources:
 - [Guide to foreign keys](https://www.youtube.com/watch?v=FrTQSPSbVC0)
@@ -253,7 +253,7 @@ Retrieves all items from a specified table in a specified order
 ### Foreign Key Query
 
 ```python
-def foreign_key_query(self, t_name_one: str, t_name_two: str, fk_name: str, pk_name: str, select_values: list, type_of_join: str, specifc_query: str) -> list:
+def foreign_key_query(self, t_name_one: str, t_name_two: str, fk_name: str, pk_name: str, select_values: list, type_of_join: str, specifc_query: str)
 ```
 
 #### Description
@@ -295,36 +295,36 @@ b3 = Book(3, "Le Petit Prince", "Antoine de Saint-Exupéry", 96)
 
 #### Creating
 ```python
-bookTable = """ CREATE TABLE IF NOT EXISTS Books (
-            Id INT PRIMARY KEY,
-            Title CHAR(25) NOT NULL,
-            Author CHAR(25) NOT NULL,
-            Pages INT
-        );  """
+bookTable = """ 
+    Id INT PRIMARY KEY,
+    Title CHAR(25) NOT NULL,
+    Author CHAR(25) NOT NULL,
+    Pages INT
+    """
 ```
 #### Inserting
 ```python
 book_insert_query = """ INSERT INTO Books(
-            Id, 
-            Title, 
-            Author, 
-            Pages)
-            VALUES (?, ?, ?, ?);
-            """
+    Id, 
+    Title, 
+    Author, 
+    Pages)
+    VALUES (?, ?, ?, ?);
+    """
 ```
 #### Updating
 ```python
 book_update_query = """ UPDATE Books
-            SET Pages = 100 
-            WHERE Id = 1;
-            """
+    SET Pages = 100 
+    WHERE Id = 1;
+    """
 ```
 
 #### Custom Retrieval 
 ```python
 get_custom_query = """ SELECT * FROM Books 
-            WHERE Pages=?
-            """
+    WHERE Pages=?
+    """
 ```
 
 ### Implementation With Database Methods
@@ -339,7 +339,7 @@ The following is an implementation of the most common usage methods used at once
 ```python
 # In Your Main Compiling File:
 db = Thriftstore()
-db.create_table(bookTable)
+db.create_table("Books", bookTable)
 db.insert_into_table(book_insert_query, b1)
 db.insert_into_table(book_insert_query, b2)
 db.insert_into_table(book_insert_query, b3)

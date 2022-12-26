@@ -34,8 +34,9 @@ class Thriftstore:
     
     # Methods (1): CRUD Methods
 
-    def create_table(self, table: str) -> None:
+    def create_table(self, table_name:str, table_str: str) -> None:
         try:
+            table = f"CREATE TABLE IF NOT EXISTS {table_name} ({table_str});"
             self.__cur.execute(table)
             print("Table successfully created.")
         except sqlite3.Error as e:
