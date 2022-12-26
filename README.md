@@ -265,7 +265,7 @@ Retrieves all items depending on foreign key query between two relational tables
 - fk_name: String name of foreign key of table with primary key
 - pk_name: String name of primary key of table without foreign key
 - select_values: A list of values to be selected in the query
-- type_of_join: Can be **JOIN**, **LEFT JOIN**, **INNER JOIN** depending on desired results of query
+- type_of_join: Can be **JOIN**, **LEFT JOIN**, **RIGHT JOIN**, **INNER JOIN**, etc. depending on desired results of query
 - specific_query: Specifications such as GROUP BY, WHERE, etc.
 
 #### Return / Output 
