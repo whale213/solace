@@ -20,11 +20,13 @@
     font-family: 'Send Flowers', cursive;
 }
 
+.side-nav { position: fixed; }
+
+.left-22 { margin-left: 22%; }
+
 .vh-100 { height: 100vh; }
 
-.width-20 { width: 20%; }
-
-.width-80 { width: 80%; }
+.width-22 { width: 22%; }
 
 .nav-item:hover { background-color: var(--theme-light-cream);}
 
