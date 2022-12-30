@@ -105,7 +105,7 @@ Inserts a class instance as a tuple into a table in the database via an sql inse
 ### Update Table Item
 
 ```python
-update_table_item(self, update_query: str)
+update_table_item(self, update_query: str, opt_update_tuple = ())
 ```
 
 #### Description
@@ -118,6 +118,10 @@ Updates an item in the table in the database.
         2. The specified header to change
         3. The new value to set for that header
         4. The condition to set the new value
+
+**NOTE - the arguement is optional as there are many ways to perform an update query. Hence, feel free to use what you prefer.** 
+
+- opt_update_tuple: an optional tuple arguement which can be used as another way to update the table item along with the update_query
 
 #### Return / Output 
 - success / error message in console

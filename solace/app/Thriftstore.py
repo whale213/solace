@@ -80,9 +80,12 @@ class Thriftstore:
             print(exc)
 
     
-    def update_table_item(self, update_query: str) -> None:
+    def update_table_item(self, update_query: str, opt_update_tuple = ()) -> None:
         try:
-            self.__cur.execute(update_query)
+            if opt_update_tuple:
+                self.__cur.execute(update_query, opt_update_tuple)
+            else:
+                self.__cur.execute(update_query)
             self.__con.commit()
             print("Successfully updated table item.")
         except sqlite3.Error as e:
