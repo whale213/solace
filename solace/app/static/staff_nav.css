@@ -14,11 +14,7 @@
 
 .staff-nav-active { background-color: var(--theme-cream); }
 
-.logo-font { 
-    font-family: 'Playfair Display', serif;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Send Flowers', cursive;
-}
+.logo-font { font-family: 'Merriweather', serif; }
 
 .side-nav { position: fixed; }
 
