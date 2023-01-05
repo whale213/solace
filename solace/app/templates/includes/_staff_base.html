@@ -21,8 +21,15 @@
 </head>
 <body>
     <div class="container-fluid row">
-        <div class="bg-theme-1 vh-100 position-fixed width-20">
+        <nav class="bg-theme-1 position-fixed width-20 mh-100">
             <ul class="list-unstyled fs-5 text-center">
+                <li class="pt-5 pb-5">
+                    <nav class="navbar navbar-light">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </nav>
+                </li>
                 <li class="pt-5 pb-5">
                     <p class="display-5 logo-font">Solace</p>
                 </li>
@@ -31,11 +38,11 @@
                     <i class="side-nav-icon fa fa-user-circle fs-3"></i>Manage Account</a>
                 </li>
                 <li class="p-4 mt-2 mb-2 nav-item invent-tab">
-                    <a href="/inventory" class="text-decoration-none text-dark d-flex justify-content-between width-vw font-responsive m-auto align-items-center">
+                    <a href="/viewInventory" class="text-decoration-none text-dark d-flex justify-content-between width-vw font-responsive m-auto align-items-center">
                     <i class="side-nav-icon fa fa-archive fs-3"></i>Manage Inventory</a>
                 </li>
                 <li class="p-4 mt-2 mb-2 nav-item donate-tab">
-                    <a href="#" class="text-decoration-none text-dark d-flex justify-content-between width-vw font-responsive m-auto align-items-center">
+                    <a href="/viewDonations" class="text-decoration-none text-dark d-flex justify-content-between width-vw font-responsive m-auto align-items-center">
                     <i class="side-nav-icon fa fa-gift fs-3"></i>Manage Donations</a>
                 </li>
                 <li class="p-4 mt-2 mb-2 nav-item gen-rep-tab">
@@ -51,18 +58,27 @@
                     <i class="side-nav-icon fa fa-times-circle fs-3"></i>Sign Out</a>
                 </li>
             </ul>
-        </div>
-        <div class="width-80 ml-custom">
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="p-4 fs-4">
+                  <div class="mb-2 p-2 acc-tab"><a href="#" class="text-decoration-none text-dark">Manage Account</a></div>
+                  <div class="mb-2 p-2 invent-tab"><a href="/viewInventory" class="text-decoration-none text-dark">Manage Inventory</a></div>
+                  <div class="mb-2 p-2 donate-tab" ><a href="/viewDonations" class="text-decoration-none text-dark">Manage Donations</a></div>
+                  <div class="mb-2 p-2 gen-rep-tab"><a href="#" class="text-decoration-none text-dark">Generate Reports</a></div>
+                  <div class="mb-2 p-2 ans-inq-tab"><a href="#" class="text-decoration-none text-dark">Answer Inquiries</a></div>
+                  <div class="p-2"><a href="#" class="text-decoration-none text-dark">Sign Out</a></div>
+                </div>
+              </div>
+        </nav>
+        <main class="width-80 ml-custom">
             {% block content %}
             {% endblock %}
-        </div>
+        </main>
     </div>
     <!--BOOTSTRAP JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
     {% block scripts %}
-    <!--Insert your own javascript-->
     {% endblock %}
 </body>
 </html>

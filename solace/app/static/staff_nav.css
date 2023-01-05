@@ -1,5 +1,4 @@
 /* Global Colour Theme Variables */
-
 :root {
     --theme-pink: #F5CEBC;
     --theme-orange: #E8A165;
@@ -18,11 +17,13 @@ html { overflow-x: hidden; }
 
 .logo-font { font-family: 'Merriweather', serif; }
 
-.vh-100 { height: 100vh; }
-
 .ml-custom { margin-left: 20vw; }
 
 .width-20 { width: 20% !important; }
+
+.width-20 ul li:first-child { display: none; }
+
+.mh-100 { min-height: 100vh; }
 
 .width-80 { width: 80% !important; }
 
@@ -30,8 +31,25 @@ html { overflow-x: hidden; }
 
 .nav-item:hover { background-color: var(--theme-light-cream);}
 
-.nav-item:target { background-color: var(--theme-cream); }
-
 body { background-color: var(--theme-light-cream) !important; }
 
+/* Desktop, Laptop, and fully responsive */
+
 @media (max-width: 1020px) { .font-responsive { font-size: 1rem !important; } }
+
+@media (max-width: 860px) { 
+
+    .mh-100 { min-height: auto !important; }
+
+    .width-20, .width-80{ width: 100% !important; }
+
+    .ml-custom { margin-top: 15em !important; margin-left: 0% !important; }
+
+    .width-20 ul li:first-child { display: block; }
+
+    .width-20 ul li:not(li:first-child):not(li:nth-child(2)) { display: none; } 
+
+    .width-20 ul { display: flex !important; } 
+
+    .width-20 ul li:nth-child(2) {  margin: 0.3em 1.5em; } 
+  } 
