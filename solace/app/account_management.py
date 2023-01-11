@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("insert_acc.html", content="Testing")
+    return render_template("insert_acc.html")   
 
 class User:
     def __init__(self, name, email, phone_number, password, birthday, gender, addresses, card_details, ordered_items, donated_items, commission):
