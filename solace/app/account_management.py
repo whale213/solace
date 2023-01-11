@@ -16,7 +16,7 @@ class User:
 
 class UserAccountManagement:
     def __init__(self):
-        self.conn = sqlite3.connect('users.db')
+        self.conn = sqlite3.connect('Thriftstore.db')
         self.create_table()
 
     def create_table(self):
