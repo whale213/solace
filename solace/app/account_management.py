@@ -1,4 +1,11 @@
+from flask import Flask, redirect, url_for, render_template
 import sqlite3
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return render_template("insert_acc.html", content="Testing")
 
 class User:
     def __init__(self, name, email, phone_number, password, birthday, gender, addresses, card_details, ordered_items, donated_items, commission):
@@ -48,3 +55,7 @@ class UserAccountManagement:
         c = self.conn.cursor()
         c.execute("SELECT * FROM users WHERE name = ?", (user_name,))
         return c.fetchone()
+
+
+if __name__ == "__main__":
+    app.run(debug = True)
