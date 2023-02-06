@@ -1,0 +1,88 @@
+{% extends "includes/_customer_base_guest.html" %} {% block title %} Solace
+{%endblock %} {% block head %} {{ super() }}
+<link rel="stylesheet" href="/static/shop.css" />
+{% endblock %} {% block content %}
+<div class="row">
+  <aside class="col-lg-3">
+    <!-- COMPONENT MENU LIST -->
+    <div class="card p-3 h-100">
+      <nav class="nav flex-column nav-pills">
+        <a class="nav-link active" href="#">Account div</a>
+        <a class="nav-link" href="#">New orders</a>
+        <a class="nav-link" href="#">Orders history</a>
+        <a class="nav-link" href="#">My wishlist</a>
+        <a class="nav-link" href="#">Transactions</a>
+        <a class="nav-link" href="#">Profile setting</a>
+        <a class="nav-link" href="#">Log out</a>
+      </nav>
+    </div>
+    <!-- COMPONENT MENU LIST END .// -->
+  </aside>
+  <div class="col-lg-9">
+    <article class="card">
+      <div class="card-body">
+        <div class="itemside align-items-center">
+          <div class="aside">
+            <img
+              src="bootstrap5-ecommerce/images/avatars/avatar.webp"
+              class="icon-md img-avatar"
+            />
+          </div>
+          <div class="info">
+            <h6 class="title">Mr. Jackson Mike</h6>
+            <p>
+              Email: myusername@gmail.com <i class="dot"></i> Phone:
+              +1234567890988
+              <a href="#" class="px-2"><i class="fa fa-pen"></i></a>
+            </p>
+          </div>
+        </div>
+        <hr />
+        <p class="text-muted">Delivery addresses</p>
+        <div class="row g-2 mb-3">
+          <div class="col-md-6">
+            <article class="box">
+              <b class="mx-2 text-muted"
+                ><i class="fa fa-map-marker-alt"></i
+              ></b>
+              Tashkent city, Street name, Building 123, House 321
+            </article>
+          </div>
+          <!-- col.// -->
+          <div class="col-md-6">
+            <article class="box">
+              <b class="mx-2 text-muted"
+                ><i class="fa fa-map-marker-alt"></i
+              ></b>
+              Moscow city, Street name, Building lenin, House 77
+            </article>
+          </div>
+          <!-- col.// -->
+        </div>
+        <!-- row.// -->
+        <a href="#" class="btn btn-outline-primary">
+          <i class="me-2 fa fa-plus"></i> Add new address
+        </a>
+        <hr />
+        <p class="text-muted">Payment methods</p>
+        <div class="row g-2 mb-3">
+          <div class="col-md-6">
+            <article class="box">
+              <b class="mx-2 text-muted"><i class="fa fa-credit-card"></i></b>
+              Visa •••• 9905, Exp: 12/21
+            </article>
+          </div>
+          <!-- col.// -->
+        </div>
+        <!-- row.// -->
+        <a href="#" class="btn btn-outline-primary">
+          <i class="me-2 fa fa-plus"></i> Add payment method
+        </a>
+      </div>
+      <!-- card-body .// -->
+    </article>
+    <!-- card .// -->
+  </div>
+</div>
+
+{% endblock %}
