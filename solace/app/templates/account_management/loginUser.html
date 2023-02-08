@@ -1,0 +1,65 @@
+{% extends "includes/_customer_base_guest.html" %}
+{% block title %}Solace - Login User{% endblock %}
+
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-7 text-center text-lg-start">
+            <h1 class="display-4 fw-bold lh-1 mb-3">
+                Welcome to Solace.
+            </h1>
+            <p class="col-lg-10 fs-4">
+                yes, clothes. 
+            </p>
+        </div>
+        <div class="col-md-10 mx-auto col-lg-5">
+
+            <form method="post" action="" class="p-4 p-md-5 border rounded-3 bg-light">
+
+        
+
+                <p class="fw-bold">
+                    {% if msg %}
+                        {{ msg | safe }}
+                    {% else %}
+                        LOGIN
+                    {% endif %}                                  
+                </p>
+
+                <br />
+
+                <div class="container">
+                    <br>
+                    <form action="" method="post">
+                      <input type="text" placeholder="Email" name="email" value="{{
+                        request.form.email }}">
+                       <input type="password" placeholder="Password" name="password" value="{{
+                        request.form.password }}">
+                        <br>
+                    </form>
+                    {% if error %}
+                      <p class="error"><strong>Error:</strong> {{ error }}
+                    {% endif %}
+                  </div>
+
+                <br />
+                
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit" href="account_management/insert_acc.html">Sign IN</button>
+                <hr class="my-4">
+                <small class="text-muted">
+                    Dont have an account? <a href="{{ url_for('register_user') }}" class="text-right">Register</a>
+                </small>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
