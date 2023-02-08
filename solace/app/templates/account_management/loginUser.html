@@ -51,7 +51,7 @@
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
                 </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit" href="account_management/insert_acc.html">Sign IN</button>
+                <button class="w-100 btn btn-lg btn-primary" type="submit"><a href="{{ url_for('user_profile') }}" class="text-right">Sign In</a></button>
                 <hr class="my-4">
                 <small class="text-muted">
                     Dont have an account? <a href="{{ url_for('register_user') }}" class="text-right">Register</a>

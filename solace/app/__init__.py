@@ -64,6 +64,13 @@ def login_user():
     return render_template('loginUser.html', form=user_login_form)
 
 
+@app.route("/profile")
+def user_profile():
+    db = Thriftstore()
+    users = db.get_all_items("Users")
+    db.close_connection()
+
+    return render_template("account_management/insert_acc.html", users = users)
 
 
 
