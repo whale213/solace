@@ -43,7 +43,7 @@ def register_user():
             gender,
             addresses,
             card_details)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?);
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?); 
         '''
 
         user = User(user_registration_form.name.data, user_registration_form.email.data,
@@ -52,7 +52,7 @@ def register_user():
 
         db.insert_into_table(user_insert_query, user)
         db.close_connection()
-        return redirect('/register')
+        return redirect(url_for(home))
     return render_template('account_management/register.html', form=user_registration_form)
 
 
@@ -71,6 +71,38 @@ def user_profile():
     db.close_connection()
 
     return render_template("account_management/insert_acc.html", users = users)
+
+@app.route("/paymentmethods")
+def user_paymentmethods():
+    db = Thriftstore()
+    users = db.get_all_items("Users")
+    db.close_connection()
+
+    return render_template("account_management/payment_methods.html", users = users)
+
+@app.route("/savedaddresses")
+def user_savedaddresses():
+    db = Thriftstore()
+    users = db.get_all_items("Users")
+    db.close_connection()
+
+    return render_template("account_management/saved_addresses.html", users = users)  
+
+@app.route("/orderhistory")
+def user_orderhistory():
+    db = Thriftstore()
+    users = db.get_all_items("Users")
+    db.close_connection()
+
+    return render_template("account_management/order_history.html", users = users)     
+
+@app.route("/mydonations")
+def user_mydonations():
+    db = Thriftstore()
+    users = db.get_all_items("Users")
+    db.close_connection()
+
+    return render_template("account_management/my_donations.html", users = users)         
 
 
 
