@@ -1,0 +1,63 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+<!-- Insert Any Static CSS You Need Here -->
+<!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+{% endblock %}
+
+{% block title %} 
+Solace Staff Inquiries
+{% endblock %}
+
+{% block head %} 
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+<form action="#" method="post" onsubmit = 'thank()' id = form_s>
+    <div class = 'container-xs d-flex p-2 justify-content-center'>
+      <!-- <div class="mb-3 col-sm-5 container">
+        <label for="exampleFormControlInput1" class="form-label">Category</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Category" name = 'cat' required>
+      </div>       -->
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="cat" id="inlineRadio1" value="Shipping & Handling">
+        <label class="form-check-label" for="inlineRadio1">Shipping & Handling</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="cat" id="inlineRadio2" value="Grading of Clothes">
+        <label class="form-check-label" for="inlineRadio2">Grading of Clothes</label>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="cat" id="inlineRadio3" value="Clothes Donation">
+        <label class="form-check-label" for="inlineRadio3">Clothes Donation</label>
+      </div>
+
+    </div>
+    
+
+    <div class="mb-3 col-md-11 container">
+      <label for="exampleFormControlTextarea1" class="form-label">Question</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name = 'qn' required></textarea>
+    </div>
+
+    <div class="mb-3 col-md-11 container">
+        <label for="exampleFormControlTextarea1" class="form-label">Answer</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" name = 'ans' required></textarea>
+    </div>
+    
+    <div class="col-md-11 container">
+      <button type="submit" class="btn btn-primary mb-3">Submit</button>
+    </div>
+
+  </form>
+
+
+
+{% endblock %}
+
+
