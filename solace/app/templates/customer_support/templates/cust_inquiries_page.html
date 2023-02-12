@@ -1,0 +1,73 @@
+{% extends "_customer_base_guest.html" %}
+{% block title %} Solace {% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+<style>
+
+  form  {margin:50px;}
+
+  form, input {border: 15px;}
+
+  #form_s {background-color: #FAEBD9;
+           border-radius: 10px;}
+        
+</style>
+
+  <div class = 'container-xs d-flex justify-content-around'>
+    <div class = 'm-2'>
+
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+    
+  </div>
+
+  <div class = 'container' id = 'form_container'>
+    <div class = 'col-md-14 container mt-4'><h1>Inquiry</h1></div>
+  </div>
+
+  <form action="#" method="post" onsubmit = 'thank()' id = form_s>
+    <div class = 'container-xs d-flex p-2 justify-content-center'>
+      <div class="mb-3 col-sm-5 container">
+        <label for="exampleFormControlInput1" class="form-label">Name</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name" name = 'nm' required>
+      </div>
+  
+      <div class="mb-3 col-sm-5 container">
+        <label for="exampleFormControlInput2" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="Name@example.com" name = 'em' required>
+      </div>
+    </div>
+    
+
+    <div class="mb-3 col-md-11 container">
+      <label for="exampleFormControlTextarea1" class="form-label">Inquiry</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name = 'inq' required></textarea>
+    </div>
+    
+    <div class="col-md-11 container">
+      <button type="submit" class="btn btn-primary mb-3">Submit</button>
+    </div>
+
+  </form>
+  <p class="important">
+
+  <script>
+    function thank() {
+      alert('Thank you for your input!')
+    }
+  </script>
+
+    
+{% endblock %}

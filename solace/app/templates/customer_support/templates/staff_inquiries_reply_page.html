@@ -1,0 +1,87 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+<!-- Insert Any Static CSS You Need Here -->
+<!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+{% endblock %}
+
+{% block title %} 
+Solace Staff Inquiries
+{% endblock %}
+
+{% block head %} 
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+<style>
+
+  h1  {text-align: center;
+     padding: 20px 0px;}
+  
+  #hehe {border-radius: 20px;}
+  /* #nihao  {length: }  */
+
+
+  
+
+</style>
+
+{% from "includes/crud_formhelper.html" import render_field %}
+
+<div class = 'center-block'>
+  <h1>Inquiry Details</h1>
+</div>
+
+<div class = 'container mb-3'>
+  
+  <ul class="list-group list-group-flush" id = 'hehe'>
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">ID:</div>
+        {{ inquiries[0][0] }}
+      </div>
+    </li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Name:</div>
+        {{ inquiries[0][1] }}
+      </div>
+    </li>
+
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Email:</div>
+        {{ inquiries[0][2] }}
+      </div>
+    </li>
+    
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+      <div class="ms-2 me-auto">
+        <div class="fw-bold">Inquiry:</div>
+        {{ inquiries[0][3] }}
+      </div>
+    </li>
+    
+  </ul>
+</div>
+
+<div class = 'm-3'>
+  <form method="POST" onsubmit = "return alert('Your reply has been submitted successfully!')">
+    <div>
+      {{ render_field(form.reply, class = 'form-control', rows = '3', placeholder = 'Reply') }}
+    </div>
+    <div class="col-md-11 container">
+      <input type="submit" value="Submit" class="btn btn-primary mt-3" >
+      <!-- <button type="submit" class="btn btn-primary mb-3" onsubmit = "return alert('Your reply has been submitted successfully!')">Submit</button> -->
+    </div>
+    
+  </form>
+
+</div>
+
+
+
+{% endblock %}
+
