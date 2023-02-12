@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from models.Thriftstore import Thriftstore
 import sqlite3
 import smtplib
-from form import InquiryForm
+from forms.customer_support.form import InquiryForm
 
 solace_homepage = Blueprint('index', __name__)
 customer_inquiries = Blueprint('createinquiry', __name__)
