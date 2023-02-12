@@ -1,4 +1,4 @@
-from Thriftstore import Thriftstore
+from models.Thriftstore import Thriftstore
 from acct_mgmt_classes import User
 
 u1 = User("bob", "bobLee@gmail.com", "91234567", "yourmother123???", "2001-11-09","male", "paya lebar road 1", "4102920199126573")

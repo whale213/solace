@@ -1,4 +1,4 @@
-from functions_use import Thriftstore
+from models.Thriftstore import Thriftstore
 import sqlite3
 
 class Chatbot:
@@ -34,10 +34,6 @@ WHERE QuestionId = ?;
 get_custom_query = ''' SELECT * FROM ChatBot 
 WHERE QuestionId = ?
 '''
-
-
-
-
 
 
 db = Thriftstore()
