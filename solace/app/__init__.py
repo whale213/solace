@@ -1,10 +1,12 @@
 from flask import Flask, request, redirect, url_for, render_template
 from form import RegisterForm, LoginForm
 from acct_mgmt_classes import User
-from Thriftstore import Thriftstore
+from models.Thriftstore import Thriftstore
 
 app = Flask(__name__)
-
+app.config["PORT_NUMBER"] = 5000
+app.config["SECRET_KEY"] = "secretkey"
+app.secret_key = app.config["SECRET_KEY"]
 
 @app.route('/')
 def home():

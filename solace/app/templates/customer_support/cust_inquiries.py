@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
-from Thriftstore import *
+from models.Thriftstore import Thriftstore
 import sqlite3
 import smtplib
 from form import InquiryForm
@@ -46,8 +46,6 @@ def createinquiry():
         name = request.form["nm"]
         email = request.form["em"]
         inquiry = request.form["inq"]
-
-
     else:
         return render_template('cust_inquiries_page.html')
 
