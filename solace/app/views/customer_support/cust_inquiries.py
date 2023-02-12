@@ -4,20 +4,15 @@ import sqlite3
 import smtplib
 from form import InquiryForm
 
-solace_homepage = Blueprint('solace_homepage', __name__)
-
-
-customer_inquiries = Blueprint('customer_inquiries', __name__)
-staff_read_inquiries = Blueprint('staff_read_inquiries', __name__)
+solace_homepage = Blueprint('index', __name__)
+customer_inquiries = Blueprint('createinquiry', __name__)
+staff_read_inquiries = Blueprint('readinquires', __name__)
+staff_reply_inquiries = Blueprint('replyinquiries', __name__)
+staff_delete_inquiries = Blueprint('deleteinquiries', __name__)
 staff_reply_inquiries = Blueprint('staff_reply_inquiries', __name__)
-staff_delete_inquiries = Blueprint('staff_delete_inquiries', __name__)
-staff_reply_inquiries = Blueprint('staff_reply_inquiries', __name__)
-
 customer_faq = Blueprint('customer_faq', __name__)
 staff_add_faq = Blueprint('staff_add_faq', __name__)
 staff_delete_faq = Blueprint('staff_delete_faq', __name__)
-
-
 
 
 db = Thriftstore()

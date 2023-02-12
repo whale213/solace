@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, url_for, render_template
 from form import RegisterForm, LoginForm
 from acct_mgmt_classes import User
 from models.Thriftstore import Thriftstore
-from views.cust_inquiries import solace_homepage, customer_inquiries, customer_faq, staff_read_inquiries, staff_add_faq, staff_delete_faq, staff_delete_inquiries, staff_reply_inquiries
+from views.customer_support.cust_inquiries import solace_homepage, customer_inquiries, customer_faq, staff_read_inquiries, staff_add_faq, staff_delete_faq, staff_delete_inquiries, staff_reply_inquiries
 
 app = Flask(__name__)
 app.config["PORT_NUMBER"] = 5000
