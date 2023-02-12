@@ -6,15 +6,15 @@ from form import InquiryForm
 
 app = Flask(__name__)
 
-customer_inquiries = Blueprint('customer_inquiries', __name__)
-staff_read_inquiries = Blueprint('staff_read_inquiries', __name__)
-staff_reply_inquiries = Blueprint('staff_reply_inquiries', __name__)
-staff_delete_inquiries = Blueprint('staff_delete_inquiries', __name__)
-staff_reply_inquiries = Blueprint('staff_reply_inquiries', __name__)
+# customer_inquiries = Blueprint('customer_inquiries', __name__)
+# staff_read_inquiries = Blueprint('staff_read_inquiries', __name__)
+# staff_reply_inquiries = Blueprint('staff_reply_inquiries', __name__)
+# staff_delete_inquiries = Blueprint('staff_delete_inquiries', __name__)
+# staff_reply_inquiries = Blueprint('staff_reply_inquiries', __name__)
 
-customer_faq = Blueprint('customer_faq', __name__)
-staff_add_faq = Blueprint('staff_add_faq', __name__)
-staff_delete_faq = Blueprint('staff_delete_faq', __name__)
+# customer_faq = Blueprint('customer_faq', __name__)
+# staff_add_faq = Blueprint('staff_add_faq', __name__)
+# staff_delete_faq = Blueprint('staff_delete_faq', __name__)
 
 
 
@@ -40,7 +40,7 @@ class Inquiry:
 def index():
     return render_template("Homepage.html")
 
-@customer_inquiries.route("/submit", methods=["POST", "GET"])
+@app.route("/submit", methods=["POST", "GET"])
 def createinquiry():
     if request.method == 'POST':
         name = request.form["nm"]
@@ -66,7 +66,7 @@ def createinquiry():
 
 
 
-@staff_read_inquiries.route("/inquiries")
+@app.route("/inquiries")
 def readinquiries():
     db = Thriftstore()
     inquiries = db.get_all_items('inquiry')
@@ -75,7 +75,7 @@ def readinquiries():
 
     return render_template("staff_inquiries_read_page.html", inquiries = inquiries, faq = faq)
 
-@staff_reply_inquiries.route("/update", methods=["POST","GET"])
+@app.route("/update", methods=["POST","GET"])
 def replyinquiries():
     id = request.args.get('id')
     db = Thriftstore()
@@ -106,7 +106,7 @@ def replyinquiries():
     
     
 
-@staff_delete_inquiries.route("/delete", methods=["POST"])
+@app.route("/delete", methods=["POST"])
 def delete():
     id = request.form.get("id")
     db = Thriftstore()
@@ -116,7 +116,7 @@ def delete():
     return redirect('/inquiries')
 
 
-@customer_faq.route('/FAQ', methods=["POST", "GET"])
+@app.route('/FAQ', methods=["POST", "GET"])
 def faq():
     db = Thriftstore()
 
@@ -130,7 +130,7 @@ def faq():
 
     return render_template('cust_faq_page.html', ship = ship, donations = donations, grading = grading)
 
-@staff_add_faq.route('/FAQa', methods=["POST", "GET"])
+@app.route('/FAQa', methods=["POST", "GET"])
 def faq_add():
     if request.method == 'POST':
         name = request.form['cat']
@@ -157,7 +157,7 @@ def faq_add():
 
 
 
-@staff_delete_faq.route("/FAQ_delete", methods=["POST"])
+@app.route("/FAQ_delete", methods=["POST"])
 def faq_delete():
 
     id = request.form.get("id")
