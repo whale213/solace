@@ -8,6 +8,8 @@ app = Flask(__name__)
 app.config["PORT_NUMBER"] = 5000
 app.config["SECRET_KEY"] = "secretkey"
 app.secret_key = app.config["SECRET_KEY"]
+
+# Customer Support
 app.register_blueprint(solace_homepage)
 app.register_blueprint(customer_inquiries)
 app.register_blueprint(staff_read_inquiries)
