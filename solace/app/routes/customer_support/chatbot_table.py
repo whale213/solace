@@ -47,11 +47,6 @@ db.insert_into_table(chatbot_insert_query, q2)
 db.insert_into_table(chatbot_insert_query, q3)
 db.insert_into_table(chatbot_insert_query, q4)
 
-
-qnid_view = int(input('Enter the Id of the question you want to view:'))
-
-print(db.get_item_by_custom_value(get_custom_query, qnid_view))
-
 db.close_connection()
 
 
