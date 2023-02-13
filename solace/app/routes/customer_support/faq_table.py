@@ -71,14 +71,6 @@ db.insert_into_table(faq_insert_query, f6)
 
 
 
-
-
-id_view = int(input('Enter the Id of the question you want to view:'))
-
-print(db.get_item_by_custom_value(get_custom_query, id_view))
-
-
-
 db.close_connection()
 
 

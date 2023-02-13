@@ -11,9 +11,12 @@ Solace Staff Inquiries
 {% block head %} 
 {{ super() }}
 {% endblock %}
-
-
 {% block content %}
+<style>
+  .ans-inq-tab {
+    background-color: var(--theme-cream);
+  }
+</style>
 
 <form action="#" method="post" onsubmit = 'thank()' id = form_s>
     <div class = 'container-xs d-flex p-2 justify-content-center'>

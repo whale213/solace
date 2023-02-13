@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, url_for, render_template
 from form import RegisterForm, LoginForm
 from acct_mgmt_classes import User
 from models.Thriftstore import Thriftstore
+from routes.customer_support.faq_table import faqTable
 from routes.customer_support.cust_inquiries import solace_homepage, customer_inquiries, staff_read_inquiries, staff_reply_inquiries, staff_delete_inquiries, customer_faq, staff_add_faq, staff_delete_faq
 
 app = Flask(__name__)
@@ -25,8 +26,6 @@ app.register_blueprint(staff_delete_faq)
 def home():
     user_login_form = LoginForm(request.form)
     form = user_login_form
-
-    
 
     if request.method == "POST" and user_login_form.validate():
 
@@ -122,6 +121,9 @@ def user_mydonations():
 
 
 if __name__ == "__main__":
+    # db = Thriftstore()
+    # db.drop_table("faq")
+    # db.create_table("faq", faqTable)
 #     usersTableAttributes = '''
 #     user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
 #     name TEXT NOT NULL,

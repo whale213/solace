@@ -22,19 +22,20 @@ Solace Staff Inquiries
   #hehe {border-radius: 20px;}
   /* #nihao  {length: }  */
 
-
+  .ans-inq-tab {
+    background-color: var(--theme-cream);
+  }
   
-
 </style>
 
-{% from "includes/crud_formhelper.html" import render_field %}
+{% from "includes/_formhelper.html" import render_field %}
 
 <div class = 'center-block'>
   <h1>Inquiry Details</h1>
 </div>
 
 <div class = 'container mb-3'>
-  
+{% if (inquiries | length) != 0 %}
   <ul class="list-group list-group-flush" id = 'hehe'>
     <li class="list-group-item d-flex justify-content-between align-items-start">
       <div class="ms-2 me-auto">
@@ -63,10 +64,11 @@ Solace Staff Inquiries
         {{ inquiries[0][3] }}
       </div>
     </li>
-    
   </ul>
 </div>
-
+{% else %}
+<p class="text-center display-6 m-5">There are no inquiries to reply.</p>
+{% endif %}
 <div class = 'm-3'>
   <form method="POST" onsubmit = "return alert('Your reply has been submitted successfully!')">
     <div>
@@ -76,12 +78,7 @@ Solace Staff Inquiries
       <input type="submit" value="Submit" class="btn btn-primary mt-3" >
       <!-- <button type="submit" class="btn btn-primary mb-3" onsubmit = "return alert('Your reply has been submitted successfully!')">Submit</button> -->
     </div>
-    
   </form>
-
 </div>
-
-
-
 {% endblock %}
 
