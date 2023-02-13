@@ -2,12 +2,15 @@ from flask import Flask, request, redirect, url_for, render_template
 from form import RegisterForm, LoginForm
 from acct_mgmt_classes import User
 from models.Thriftstore import Thriftstore
-from view.customer_support.cust_inquiries import solace_homepage, customer_inquiries, staff_read_inquiries, staff_reply_inquiries, staff_delete_inquiries, customer_faq, staff_add_faq, staff_delete_faq
+from routes.customer_support.faq_table import faqTable
+from routes.customer_support.cust_inquiries import solace_homepage, customer_inquiries, staff_read_inquiries, staff_reply_inquiries, staff_delete_inquiries, customer_faq, staff_add_faq, staff_delete_faq
 
 app = Flask(__name__)
 app.config["PORT_NUMBER"] = 5000
 app.config["SECRET_KEY"] = "secretkey"
 app.secret_key = app.config["SECRET_KEY"]
+
+# Customer Support
 app.register_blueprint(solace_homepage)
 app.register_blueprint(customer_inquiries)
 app.register_blueprint(staff_read_inquiries)
@@ -24,8 +27,6 @@ def home():
     user_login_form = LoginForm(request.form)
     form = user_login_form
 
-    
-
     if request.method == "POST" and user_login_form.validate():
 
         user = User(user_login_form.email.data,
@@ -35,8 +36,6 @@ def home():
     return render_template("account_management/loginUser.html", form=(user_login_form))
 
     
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
     user_registration_form = RegisterForm(request.form)
@@ -72,17 +71,25 @@ def register_user():
 @app.route('/loginUser', methods=['GET', 'POST'])
 def login_user():
     user_login_form = LoginForm(request.form)
+    
     if request.method == 'POST' and user_login_form.validate():
-        pass
+        print(user_login_form.email.data)
+        print(user_login_form.password.data)
+        db = Thriftstore()
+        users = db.get_all_items("Users")
+        for i in range(len(users)):
+           if users[i][2] == user_login_form.email.data and users[i][4] == user_login_form.password.data:
+            print("Shit works")
+            return redirect("/profile")
     return render_template('loginUser.html', form=user_login_form)
+        
 
 
-@app.route("/profile")
+@app.route("/profile", methods=['GET', 'POST'])
 def user_profile():
     db = Thriftstore()
     users = db.get_all_items("Users")
     db.close_connection()
-
     return render_template("account_management/insert_acc.html", users = users)
 
 @app.route("/paymentmethods")
@@ -120,19 +127,20 @@ def user_mydonations():
 
 
 if __name__ == "__main__":
-#     usersTableAttributes = '''
-#     user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-#     name TEXT NOT NULL,
-#     email TEXT NOT NULL,
-#     phone_number TEXT NOT NULL, 
-#     password TEXT NOT NULL,
-#     birthday TEXT NOT NULL, 
-#     gender TEXT NOT NULL,
-#     addresses TEXT NOT NULL,
-#     card_details TEXT NOT NULL
-# '''    
 #     db = Thriftstore()
-#     db.drop_table("Users")
+#     usersTableAttributes = '''
+#      user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+#      name TEXT NOT NULL,
+#      email TEXT NOT NULL,
+#      phone_number TEXT NOT NULL, 
+#      password TEXT NOT NULL,
+#      birthday TEXT NOT NULL, 
+#      gender TEXT NOT NULL,
+#      addresses TEXT NOT NULL,
+#      card_details TEXT NOT NULL
+#  '''    
+# #     db = Thriftstore()
+# #     db.drop_table("Users")
 #     db.create_table("Users", usersTableAttributes)
     app.run(debug=True)
 

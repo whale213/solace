@@ -92,6 +92,10 @@
   margin-bottom: 24px;
 }
 
+.balls {
+  color: white;
+}
+
 .sign-up-btn {
   appearance: none;
   background-color: transparent;

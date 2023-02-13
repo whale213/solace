@@ -120,62 +120,52 @@ body {
               </li>
             </ul>
           </div>
-
-
           <div class="card-body tab-content">
             <div class="tab-pane active" id="profile">
 
-            <h6>YOUR PROFILE INFORMATION</h6>
+            
+              
+              <h6>YOUR PROFILE INFORMATION</h6>
               <hr>
               <table>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Birthday</th>
-                    <th>Gender</th>
-                  </tr>
-
-
-                  {% for id in Users %}
-                  <tr>
-                    <td>{{ id[1] }}</td>
-                    <td>{{ id[2] }}</td>
-                    <td>{{ id[3] }}</td>
-                    <td>{{ id[5] }}</td>
-                    <td>{{ id[6] }}</td>
+                <form>
                   
-                    
-                    <td>
-                      <form>
-                        <label for="Name">Full Name</label>
-                        <input type="hidden" name="id" value="{{ id[1] }}">
-                        <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
-                      
-                        <label for="email">Email</label>
-                        <input type="hidden" name="id" value="{{ id[2] }}">
-                      
-                        <label for="fullName">Phone Number</label>
-                        <input type="hidden" name="id" value="{{ id[3] }}">
-                      
-                        <label for="fullName">Birthday</label>
-                        <input type="hidden" name="id" value="{{ id[5] }}">
-                      
-                        <label for="location">Gender</label>
-                        <input type="hidden" name="id" value="{{ id[6] }}">
-                        
-                        <br>
-                        <br>
-                      
-                        <button type="button" class="btn btn-primary">Update Profile</button>
-                        <form action="/delete" method="post" onsubmit = "return confirm('Are you sure you want to delete Inquiry Id {{ id[0] }}?');">
-                          <input type="hidden" name="id" value="{{ id[0] }}">
-                          <input type="submit" value="Delete" class = 'btn btn-primary mb-3'>
-                        </form>
-                      </td>
-                    </form>
-                  </tr>
-                  {% endfor %}
+                  <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your Name" value="">
+                    <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="bio">Email</label>
+                    <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your Email" value="russelllim2005@gmail.com">
+                  </div>
+                  <div class="form-group">
+                    <label for="url">Phone Number</label>
+                    <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your Phone Number" value="96600709">
+                  </div>
+                  <div class="form-group">
+                    <label for="location">Birthday</label>
+                    <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your Birthday" value="2023-02-01">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="location">Gender</label>
+                    <select name="gender" id="gender">
+                      <option value="select">Select</option>
+                      <option value="male">Male</option>
+                      <option value="female" selected>Female</option>
+                      <option value="confused">Confused</option>
+                    </select>
+                  </div>
+                  <br>
+                  <div class="form-group small text-muted">
+                    All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
+                  </div>
+                  <br>
+                  <button type="button" class="btn btn-primary">Update Profile</button>
+                  <button type="reset" class="btn btn-light">Reset Changes</button>
+                </form>
+                
               </table>
               
 

@@ -22,13 +22,14 @@ Solace Staff Read
   p   {text-align: center;
        margin:30px 0px;}
 
-
+.ans-inq-tab {
+  background-color: var(--theme-cream);
+}
 
   form, input {border: 15px;}
 </style>
 
 {% endblock %}
-
 
 {% block content %}
 <style>
@@ -50,7 +51,6 @@ Solace Staff Read
 <div class = 'center-block'>
   <h1>Answer Inquiries</h1>
 </div>
-
 <div class="table">
     <table class="m-5" id="tbUser">
         <tr>
@@ -87,7 +87,6 @@ Solace Staff Read
         {% endfor %}
     </table>
 </div>
-
 <div class = 'center-block'>
   <h1>Update FAQ Section</h1>
 </div>
@@ -100,7 +99,7 @@ Solace Staff Read
             <th>Question</th>
             <th>Answer</th>
             <th>Add</th>
-            <!-- <th>Update</th> -->
+            <th>Update</th>
             <th>Delete</th>
 
 
@@ -119,13 +118,12 @@ Solace Staff Read
               </form>
             </td>
 
-            <!-- <td>
+            <td>
               <form>
                 <input type="hidden" name="id" value="{{ qn[0] }}">
                 <input type="submit" value="Update" formaction="/update" class = 'btn btn-primary mb-3'>
             </form>
-            </td> -->
-            
+            </td>
             <td>
               <form action="/FAQ_delete" method="post" onsubmit = "return confirm('Are you sure you want to delete FAQ Id {{ qn[0] }}?');">
                 <input type="hidden" name="id" value="{{ qn[0] }}">
@@ -137,7 +135,5 @@ Solace Staff Read
         {% endfor %}
     </table>
 </div>
-
-
 
 {% endblock %}
