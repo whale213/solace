@@ -1,0 +1,39 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}"/>
+{% endblock %}
+{% block title %} Donation Approval Details {% endblock %}
+{% block content %}
+<a href="/viewDonations" class="text-decoration-none prev-page d-flex m-5 flex-end"><p class="display-6">&lt; Back To Donations</p></a>
+<p class="display-6 m-5">Viewing Donation Details Of User ID: {{ user_id }}</p>
+<div class="d-flex flex-wrap m-5">
+    <div class="width-35 rounded-bottom pb-4">
+        <p class="display-6">Submitted Donation Items</p>
+        {% for donation in range(donations | length) %}
+            <div class="d-flex bg-preview rounded">
+                <img src="{{ url_for('static', filename='donation_images/' + donations[donation][5] ) }}" class="w-50 m-auto"/>
+                <div class="fs-5 m-auto">
+                    <p>Name: {{ donations[donation][0] }}</p>
+                    <p>Condition: {{ donations[donation][1] }}</p>
+                    <p>Total Quantity: {{ donations[donation][2] }}</p>
+                    <p>Brand: {{ donations[donation][3] }}</p>
+                    <p>Size: {{ donations[donation][4] }}</p>
+                </div>
+            </div>
+            <br/><br/>
+        {% endfor %}
+        <br/><br/><br/>
+    </div>
+    <div class="m-auto w-50">
+        <div class="form-title rounded-top text-center flex-column d-flex justify-content-sm-center m-auto w-100">
+            <p class="display-6 font-weight-bold p-3">Donation Approval Details For Donation ID: {{ donation_id }}</p>
+        </div>
+        <div class="bg-light p-2 text-center">
+            <p class="fs-3 mb-4">Status Of Donation: <span class="text-danger">{{outcome}}</span></p>
+            <p class="fs-3 mb-4">{{collection_opt}} Request: <span class="text-danger">{{donation_req_stat}}</span></p>
+            <p class="fs-3 mb-6">Details: {{donation_date}} at {{donation_time}}</p>
+            <p class="fs-3 mb-4">Total awarded commission: <span class="text-danger">${{possible_commission}}</span></p>
+            <p class="fs-3">Remarks Given: <span class="text-danger">{{remarks}}</span></p>
+        </div>
+    </div>
+{% endblock %}

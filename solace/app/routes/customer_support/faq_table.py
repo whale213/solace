@@ -1,12 +1,6 @@
 from models.Thriftstore import Thriftstore
 import sqlite3
-
-class FAQ:
-
-    def __init__(self, category, question, answer) -> None:
-        self.__category = category
-        self.__question = question
-        self.__answer =  answer
+from models.Faq import FAQ
         
 f1 = FAQ('Shipping & Handling', 'How are our products packed?', 'We iron and steam our products before shipping them out')
 f2 = FAQ('Shipping & Handling', 'What if our products get lost in shipping?', 'Once you contact us, we will try to replace the products or give you back your money as compensation.')
@@ -16,8 +10,6 @@ f5 = FAQ('Grading of Clothes', 'What are the tiers in your grading system?', 'We
 f6 = FAQ('Grading of Clothes', 'How do you grade your clothing?', 'Our staff looks through each item and give the item a rating based on a system we have carefully created')
 # f7 = FAQ(6, 'Exchanges and Returns', '?', '?')
 # f8 = FAQ(6, 'Exchanges and Returns', '?', '?')
-
-
 
 
 faqTable = '''

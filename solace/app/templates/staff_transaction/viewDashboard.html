@@ -1,0 +1,65 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='inventory_anim.css')}}">
+{% endblock %}
+{% block title %} Inventory Dashboard {% endblock %}
+{% block content %}
+<style>
+    .invent-tab { background-color: var(--theme-cream); }
+</style>
+<div class="container cssanimation-2 fadeInTop">
+    {% with messages = get_flashed_messages()%}
+      {% if messages %}
+      <div class="alert bg-dark mt-5">
+          <button type="button" class="close btn btn-light" data-dismiss="alert">&times;</button>
+          <span class="text-pink fs-5 text-center">{{ messages[0] }}</span>
+      </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+<a href="/viewInventory" class="text-decoration-none prev-page p-5 d-flex flex-end"><p class="display-6">&lt; Back To Inventory</p></a>
+<br/><br/><br/>
+<div class="d-flex justify-content-between">
+    <p class=" display-6 mx-5">Inventory Products Dashboard</p>
+    {% if products_length > 0 %}
+        <a href="/ProductsRawData" class="reduce p-2 mx-5 fs-4 text-pink btn btn-dark">Download Raw Data</a>
+    {% endif %}
+</div>
+<br/><br/>
+{%if products_length > 0 %}
+    {%if recommendation == True %}
+    <p class="fs-3 mx-5 cssanimation fadeInBottom">Insights & Recommendations</p>
+    <div class="shadow p-3 mb-5 bg-danger rounded text-pink m-4 mx-5 cssanimation fadeInBottom">
+        <p class="fw-bold text-light fs-5">Issue: {{flagged_products}} have been flagged due to low stock numbers.</p>
+        <p class="fw-bold text-light fs-5">Recommendation:  Stock for products are recommended to be above 20. Please Replenish Flagged Products.</p>
+    </div>
+    {% else %}
+    <div class="mx-5 bg-preview rounded p-3">
+        <p class="fs-4 m-auto">Dashboard Analytics: No Current Issues With Inventory.</p>
+    </div>
+    <br/><br/>
+    {% endif %}
+    <div class="d-flex mx-4 justify-content-around cssanimation fadeInBottom">
+        <div class="width-30 shadow p-3 mb-5 bg-light-cream rounded text-dark border border-dark">
+            <p class="justify-content-between d-flex fw-bold">Total Stock Count: <span class="fs-1 text-dark fw-bold">{{stock_total}}</span></p>
+        </div>
+        <div class="width-30 shadow p-3 mb-5 bg-light-cream rounded text-dark border border-dark">
+            <p class="justify-content-between d-flex fw-bold">Total Supplier Count: <span class="fs-1 text-dark fw-bold">{{supplier_total}}</span></p>
+        </div>
+        <div class="width-30 shadow p-3 mb-5 bg-light-cream rounded text-dark border border-dark">
+            <p class="justify-content-between d-flex fw-bold">Total Distinct Brand Count: <span class="fs-1 text-dark fw-bold">{{brand_total}}</span></p>
+        </div>
+    </div>
+    <div class="d-flex mx-5 cssanimation fadeInBottom">
+        <div class="w-50 shadow p-3 mb-5 bg-preview rounded zoom-in">
+            <img src="/barchart.png" alt="Product Bar Chart" class="w-100">
+        </div>
+        <div class="w-50 shadow p-3 mb-5 bg-preview rounded mx-5 zoom-in">
+            <img src="/piechart.png" alt="Product Pie Chart" class="w-100">
+        </div>
+    </div>
+{% else %}
+<p class=" display-6 mx-5">There are no products to show.</p>
+{% endif %}
+{% endblock %}

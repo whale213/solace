@@ -1,0 +1,217 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='inventory_anim.css') }}"/>
+{% endblock %}
+{% block title %} Managing Inventory {% endblock %}
+{% block content %}
+<style>
+    .invent-tab { background-color: var(--theme-cream); }
+</style>
+{% from "includes/_formHelper.html" import render_field %}
+<div class="d-flex form-title m-5 p-4 rounded">
+    <img src="{{ url_for('static', filename='images/p-fall-wallpaper.jpg') }}" alt="staff-img" class="staff-profile-img">
+    <p class="mt-4 mx-4 display-6">Welcome back, it is {{ today }}</p>
+</div>
+{% if flagged == True %}
+<div class="bg-danger mx-5 text-light p-4 shadow rounded">
+    <p class="fs-4 d-flex justify-content-between">Dashboard Analytics have detected issues with products! 
+        <a href="/viewInventoryDashboard" class="px-5 fs-4 text-danger btn btn-light">Find Out More</a>
+    </p>
+</div>
+{% else %}
+<div class="mx-5 bg-preview rounded p-3 border border-dark d-flex justify-content-between">
+    {% if (products | length) > 0 %}
+        <p class="fs-4">Dashboard Analytics: Inventory has no issues.</p>
+    {% else %}
+    <p class="fs-4">Dashboard Analytics: There are no products to perform analytics.</p>
+    {% endif %}
+    <a href="/viewInventoryDashboard" class="px-5 fs-4 text-pink btn btn-dark">View Dashboard</a>
+</div>
+{% endif %}
+<div class="d-flex justify-content-between m-5">
+    <div class="d-flex bg-preview rounded pb-4 width-70">
+        <div class="w-100">
+            <form action="" method="POST" class="d-flex">
+                <div class="form-input w-100">
+                    {{ render_field(form.search, class="form-control p-2 mx-4", placeholder="Search. . .")}}
+               </div>
+               <input type="submit" class="mx-4 mt-4 fs-5 btn bg-preview text-dark border border-dark" value="Search">
+            </form>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end m-auto">
+        <a class="btn btn-dark text-pink fs-5 mx-2" href="/viewProductFormSettings">Form Settings</a>
+        <a class="btn btn-dark text-pink fs-5" href="/addProduct"><span class="fs-5">&plus;</span> New Product</a> 
+    </div>
+</div>
+<br/>
+{% if (result | length) != 0 %}
+    <div class="table-responsive col">
+        <table class="m-5 table table-striped rounded shadow">
+            <thead class="bg-light">
+                <tr class="fs-4 text-orange">
+                    <th>Image</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white fs-5">
+                {% for product in range(result | length) %}
+                <tr>
+                    <td class="width-10"><img src="{{ url_for('static', filename='product_images/' + result[product][11]) }}" class="w-75 rounded"/></td>
+                    <td >{{ result[product][0] }}</td>
+                    <td class="w-25">{{ result[product][7] }} {{ result[product][1] }}</td>
+                    <td >${{ result[product][5] }}</td>
+                    <td><span class="text-danger">{{ result[product][4] }}</span>/ 999</td>
+                    <!--URL FOR and pass value to function-->
+                    <td>
+                        <a href="/editProduct/{{ result[product][0] }}" class="btn action-bg fs-5"><i class="fa-sharp fa-solid fa-pen-to-square"></i></a>
+                        <!--OPEN MODAL BUTTON TO DELETE PRODUCT-->
+                        <button type="button" class="btn action-bg fs-5" data-bs-toggle="modal" data-bs-target="#deleteModal_{{ result[product][0] }}">
+                            <i class="fa-sharp fa-solid fa-trash text-danger"></i>
+                        </button>
+                        <!-- Bootstrap Modal -->
+                        <div class="modal fade" id="deleteModal_{{ result[product][0] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Deleting Product Alert</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="text-danger">WARNING</span>, you are about to delete <span class="text-danger">{{ result[product][1] }}
+                                    by {{ result[product][2] }}. </span> Do you still wish to proceed? 
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger fs-5 h-50" data-bs-dismiss="modal">No</button>
+                                    <a href="/deleteProduct/{{ result[product][0] }}" class="btn btn-dark text-pink fs-5">Yes, Delete</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn action-bg p-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-sharp fa-solid fa-circle-question fs-4"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right w-50 h-25 border-none bg-light m-auto">
+                            <p class="fs-5 mb-2 mx-3 text-orange fw-bold">Description</p>
+                            <div class="mx-3">
+                                <span class="fs-5 text-center">{{ result[product][12] }}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="mx-3">
+                                    <p class="fs-5 mb-2 mx-1 text-orange fw-bold">Brand</p>
+                                    <span class="fs-5 mx-1 text-center">{{ result[product][2] }}</span>
+                                </div>
+                                <div class="mx-3">
+                                    <p class="fs-5 mb-2 mx-1 text-orange fw-bold">Category</p>
+                                    <span class="fs-5 mx-1 text-center">{{ result[product][8] }}</span>
+                                </div>
+                                <div class="mx-3">
+                                    <p class="fs-5 mb-2 mx-1 text-orange fw-bold">Sizes</p>
+                                    <span class="fs-5 mx-1 text-center">{{ result[product][9] }}</span>
+                                </div>
+                                <div class="mx-3">
+                                    <p class="fs-5 mb-2 mx-1 text-orange fw-bold">Colours</p>
+                                    <span class="fs-5 mx-1 text-center">{{ result[product][10] }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% elif searchState == True %}
+ <p class="display-6 m-5">No Results Found. <a href="" class="text-dark">View All Products</a></p>
+ {% else %}
+ {% if (products | length) != 0 %}
+    <p class="display-6 mx-5">There are {{(products | length)}} products in inventory</p>
+{% else %}
+    <p class="display-6 mx-5">There are no products in inventory</p>
+{% endif %}
+    <div class="table-responsive col">
+        <table class="m-5 table table-striped rounded shadow">
+            <thead class="bg-light">
+                <tr class="fs-4 text-orange">
+                    <th>Image</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white fs-5">
+                {% for product in range(products | length) %}
+                <tr>
+                    <td class="width-10"><img src="{{ url_for('static', filename='product_images/' + products[product][11]) }}" class="w-75 rounded"/></td>
+                    <td >{{ products[product][0] }}</td>
+                    <td class="w-25">{{ products[product][7] }} {{ products[product][1] }}</td>
+                    <td >${{ products[product][5] }}</td>
+                    <td><span class="text-danger">{{ products[product][4] }}</span>/ 999</td>
+                    <!--URL FOR and pass value to function-->
+                    <td>
+                        <a href="/editProduct/{{ products[product][0] }}" class="btn action-bg fs-5"><i class="fa-sharp fa-solid fa-pen-to-square"></i></a>
+                        <!--OPEN MODAL BUTTON TO DELETE PRODUCT-->
+                        <button type="button" class="btn action-bg fs-5" data-bs-toggle="modal" data-bs-target="#deleteModal_{{ products[product][0] }}">
+                            <i class="fa-sharp fa-solid fa-trash text-danger"></i>
+                        </button>
+                        <!-- Bootstrap Modal -->
+                        <div class="modal fade" id="deleteModal_{{ products[product][0] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Deleting Product Alert</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <span class="text-danger">WARNING</span>, you are about to delete <span class="text-danger">{{ products[product][1] }}
+                                    by {{ products[product][2] }}. </span> Do you still wish to proceed? 
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger fs-5 h-50" data-bs-dismiss="modal">No</button>
+                                    <a href="/deleteProduct/{{ products[product][0] }}" class="btn btn-dark text-pink fs-5">Yes, Delete</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn action-bg p-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-sharp fa-solid fa-circle-question fs-4"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right w-50 h-25 border-none bg-light m-auto">
+                            <p class="fs-5 mb-2 mx-3 text-orange fw-bold">Description</p>
+                            <div class="mx-3">
+                                <span class="fs-5 text-center">{{ products[product][12] }}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div class="mx-3">
+                                    <p class="fs-5 mb-2 mx-1 text-orange fw-bold">Brand</p>
+                                    <span class="fs-5 mx-1 text-center">{{ products[product][2] }}</span>
+                                </div>
+                                <div class="mx-3">
+                                    <p class="fs-5 mb-2 mx-1 text-orange fw-bold">Category</p>
+                                    <span class="fs-5 mx-1 text-center">{{ products[product][8] }}</span>
+                                </div>
+                                <div class="mx-3">
+                                    <p class="fs-5 mb-2 mx-1 text-orange fw-bold">Sizes</p>
+                                    <span class="fs-5 mx-1 text-center">{{ products[product][9] }}</span>
+                                </div>
+                                <div class="mx-3">
+                                    <p class="fs-5 mb-2 mx-1 text-orange fw-bold">Colours</p>
+                                    <span class="fs-5 mx-1 text-center">{{ products[product][10] }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+{% endblock %}

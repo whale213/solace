@@ -1,0 +1,67 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}"/>
+{% endblock %}
+{% block title %} Approving Donations {% endblock %}
+{% block content %}
+<style>
+    .donate-tab { background-color: var(--theme-cream); }
+</style>
+{% from "includes/_formHelper.html" import render_field %}
+<a href="/viewDonations" class="text-decoration-none prev-page d-flex m-5 flex-end"><p class="display-6">&lt; Back To Donations</p></a>
+<p class="display-6 m-5">Viewing Donation Of User ID: {{ user_id }}</p>
+<div class="d-flex flex-wrap m-5">
+    <div class="width-35 rounded-bottom pb-4">
+        {% for donation in range(donations | length) %}
+            <div class="d-flex bg-preview rounded">
+                <img src="{{ url_for('static', filename='donation_images/' + donations[donation][5] ) }}" class="w-50 m-auto"/>
+                <div class="fs-5 m-auto">
+                    <p>Name: {{ donations[donation][0] }}</p>
+                    <p>Condition: {{ donations[donation][1] }}</p>
+                    <p>Total Quantity: {{ donations[donation][2] }}</p>
+                    <p>Brand: {{ donations[donation][3] }}</p>
+                    <p>Size: {{ donations[donation][4] }}</p>
+                </div>
+            </div>
+            <br/><br/>
+        {% endfor %}
+        <br/>
+        <br/>
+        <br/>
+    </div>
+    <!-- <div class="position-fixed ml-form height-75"></div> -->
+    <div class="m-auto">
+        <div class="form-title rounded-top text-center flex-column d-flex justify-content-sm-center m-auto w-100">
+            <p class="display-6 font-weight-bold p-3">Donation Approval For Donation ID: {{ donation_id }}</p>
+        </div>
+        <form method="POST" action="" enctype="multipart/form-data" class="bg-form p-4">
+                {% set errorCount = namespace(value=0) %}
+                {% for field, errors in form.errors.items() %}
+                    {% set errorCount.value = errorCount.value + 1 %}
+                    <p class="text-danger fs-5">Field Error {{ errorCount.value }} :</p>
+                <p class="form-group p-2 mb-2 bg-dark text-white">{{ ",".join(errors) }}</p>
+                {% endfor %}
+                    <div class="form-group form-control-lg form-input mb-1">
+                        {{ render_field(form.all_products_approved, class="list-unstyled d-flex radio-item")}}
+                    </div>
+                    <div class="form-group form-control-lg form-input mb-1">
+                        {{ render_field(form.remarks, class="form-control textarea-resize-none")}}
+                    </div>
+                    <p class="fs-5 text-orange p-2 fw-bold">User Requested {{ collection_opt }} - ( {{ donation_date }} at {{ donation_time }} )</p>
+                    <div class="form-group form-control-lg form-input mb-1">
+                        {{ render_field(form.drp_off_or_donate_req_stat, class="list-unstyled d-flex radio-item")}}
+                    </div>
+                    <div class="form-group form-control-lg form-input mb-1">
+                        {{ render_field(form.req_stat_reason, class="form-control")}}
+                    </div>
+                    <div class="form-group form-control-lg form-input mb-1">
+                        {{ render_field(form.delivery_payment, class="list-unstyled d-flex radio-item") }}
+                    </div>
+                    <div class="form-group form-control-lg form-input mb-1">
+                        {{ render_field(form.total_commission, class="form-control")}}
+                    </div>
+            <input type="submit" value="Submit Approval"  name="submit_btn" class="btn btn-dark border-0 rounded mx-3 width-95 text-pink reduce mt-2"/>
+        </form>
+    </div>
+</div>
+{% endblock %}
