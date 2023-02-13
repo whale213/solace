@@ -1,12 +1,6 @@
 from models.Thriftstore import Thriftstore
 import sqlite3
-
-class Chatbot:
-
-    def __init__(self, question_id, question, answer) -> None:
-        self.__question_id = question_id
-        self.__question = question
-        self.__answer =  answer
+from models.Chatbot import Chatbot
         
 q1 = Chatbot(1, 'The grading system of our clothes', 'We grade our clothes ...')
 q2 = Chatbot(2, 'The pricing system', 'We price our clothes...')

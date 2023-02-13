@@ -3,6 +3,7 @@ from models.Thriftstore import Thriftstore
 import sqlite3
 import smtplib
 from forms.customer_support.form import InquiryForm
+from models.Inquiry import Inquiry
 
 solace_homepage = Blueprint('index', __name__)
 customer_inquiries = Blueprint('createinquiry', __name__)
@@ -23,13 +24,6 @@ inquiryTable = 'id INTEGER PRIMARY KEY, name TEXT, email TEXT, inquiry TEXT'
 
 db.create_table('inquiry', inquiryTable)
 db.close_connection()
-
-
-class Inquiry:
-    def __init__(self, name, email, inquiry):
-        self.name = name
-        self.email = email
-        self.inquiry = inquiry
 
 @solace_homepage.route("/")
 def index():
