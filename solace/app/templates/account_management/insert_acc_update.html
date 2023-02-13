@@ -121,59 +121,36 @@ body {
             </ul>
           </div>
           <div class="card-body tab-content">
-            <div class="tab-pane active" id="profile">
-
-            
-              
-              <h6>YOUR PROFILE INFORMATION</h6>
-              <hr>
-              <table>
-                <form>
-                  
-                  <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your Name" value="">
-                    <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
-                  </div>
-                  <div class="form-group">
-                    <label for="bio">Email</label>
-                    <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your Email" value="russelllim2005@gmail.com">
-                  </div>
-                  <div class="form-group">
-                    <label for="url">Phone Number</label>
-                    <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your Phone Number" value="96600709">
-                  </div>
-                  <div class="form-group">
-                    <label for="location">Birthday</label>
-                    <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your Birthday" value="2023-02-01">
-                  </div>
-                  <br>
-                  <div class="form-group">
-                    <label for="location">Gender</label>
-                    <select name="gender" id="gender">
-                      <option value="select">Select</option>
-                      <option value="male">Male</option>
-                      <option value="female" selected>Female</option>
-                      <option value="confused">Confused</option>
-                    </select>
-                  </div>
-                  <br>
-                  <div class="form-group small text-muted">
-                    All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
-                  </div>
-                  <br>
-                  <button type="button" class="btn btn-primary">Update Profile</button>
-                  <button type="reset" class="btn btn-light">Reset Changes</button>
-                </form>
-                
-              </table>
-              
-
-              
+              {% from "includes/_formHelper.html" import render_field %}
+              <h1 class="display-4">Update User</h1>
+              {% with messages = get_flashed_messages()%}
+              {% if messages %}
+              <div class="alert bg-danger mt-5">
+                  <button type="button" class="close btn btn-dark" data-dismiss="alert">&times;</button>
+                  <span class="text-light fs-5 text-center">{{ messages[0] }}</span>
+              </div>
+              {% endif %}
+              {% endwith %}
+              <form method="POST" action="">
+                <div class="form-group">
+                  {{ render_field(form.name, class="form-control") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.email, class="form-control") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.phone_number, class="form-control") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.birthday, class="form-control datepicker") }}
+                </div>
+                <div class="form-group">
+                  {{ render_field(form.gender, class="form-check") }}
+                </div>
+                <br>
+                <a class="text-right"><input type="submit" value="Submit" class="btn btn-primary"/></a>
+              </form>              
             </div>
-
-              
-            
           </div>
         </div>
       </div>

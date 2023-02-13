@@ -19,3 +19,10 @@ class RegisterForm(Form):
     gender = SelectField('Gender', [validators.DataRequired()], choices=[('', 'Select'), ('F', 'Female'), ('M', 'Male')], default='')
     addresses = StringField('Address', [validators.DataRequired()])
     card_details = IntegerField('Card Details', [validators.DataRequired()])
+
+class UpdateUserForm(Form):
+    name = StringField('Name', [validators.DataRequired()])
+    email = EmailField('Email', [validators.Email(), validators.DataRequired()])
+    phone_number = IntegerField('Phone Number', [validators.DataRequired()])
+    birthday = DateField('Birthday', format='%Y-%m-%d')
+    gender = SelectField('Gender', [validators.DataRequired()], choices=[('', 'Select'), ('F', 'Female'), ('M', 'Male')], default='')
