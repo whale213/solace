@@ -72,9 +72,9 @@ body {
 .shadow-none {
     box-shadow: none!important;
 }
+
 </style>
  <div class="container">
-
     <div class="row gutters-sm">
       <div class="col-md-4 d-none d-md-block">
         <div class="card">
@@ -120,74 +120,73 @@ body {
               </li>
             </ul>
           </div>
-
-
           <div class="card-body tab-content">
             <div class="tab-pane active" id="profile">
-
-            <h6>YOUR PROFILE INFORMATION</h6>
+            <h5>YOUR PROFILE INFORMATION</h5>
               <hr>
+              {% with messages = get_flashed_messages()%}
+              {% if messages %}
+                <div class="alert bg-danger mt-5">
+                    <button type="button" class="close btn btn-dark" data-dismiss="alert">&times;</button>
+                    <span class="text-light fs-5 text-center">{{ messages[0] }}</span>
+                </div>
+              {% endif %}
+              {% endwith %}
               <table>
+                  {% for id in users %}
                   <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Birthday</th>
-                    <th>Gender</th>
-                  </tr>
-
-
-                  {% for id in Users %}
-                  <tr>
-                    <td>{{ id[1] }}</td>
-                    <td>{{ id[2] }}</td>
-                    <td>{{ id[3] }}</td>
-                    <td>{{ id[5] }}</td>
-                    <td>{{ id[6] }}</td>
-                  
-                    
+                    <td>{{ id }}</td>
                     <td>
                       <form>
-                        <label for="Name">Full Name</label>
-                        <input type="hidden" name="id" value="{{ id[1] }}">
-                        <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
-                      
-                        <label for="email">Email</label>
-                        <input type="hidden" name="id" value="{{ id[2] }}">
-                      
-                        <label for="fullName">Phone Number</label>
-                        <input type="hidden" name="id" value="{{ id[3] }}">
-                      
-                        <label for="fullName">Birthday</label>
-                        <input type="hidden" name="id" value="{{ id[5] }}">
-                      
-                        <label for="location">Gender</label>
-                        <input type="hidden" name="id" value="{{ id[6] }}">
-                        
+                        <input type="hidden" name="id" value="{{ id }}">
                         <br>
                         <br>
-                      
-                        <button type="button" class="btn btn-primary">Update Profile</button>
-                        <form action="/delete" method="post" onsubmit = "return confirm('Are you sure you want to delete Inquiry Id {{ id[0] }}?');">
-                          <input type="hidden" name="id" value="{{ id[0] }}">
-                          <input type="submit" value="Delete" class = 'btn btn-primary mb-3'>
                         </form>
                       </td>
                     </form>
                   </tr>
                   {% endfor %}
               </table>
-              
+              <hr>
+              <table>
+                <tr>
+                  <td><h6>Name:</h6></td>
+                  <td>{{ user_info[1] }}</td>
+                </tr>
+                <tr>
+                  <td><h6>Email:</h6></td>
+                  <td>{{ user_info[2] }}</td>
+                </tr>
+                <tr>
+                  <td><h6>Phone Number:</h6></td>
+                  <td>{{ user_info[3] }}</td>
+                </tr>
+                <tr>
+                  <td><h6>Birthday:</h6></td>
+                  <td>{{ user_info[5] }}</td>
+                </tr>
+                <tr>
+                  <td><h6>Gender:</h6></td>
+                  <td>{{ user_info[6] }}</td>
+                </tr>
+              </table>
+              <hr>
+              <br>
+              <br>
+              <button type="button" class="btn btn-primary"><a href="{{ url_for('updateprofile') }}" class="balls">Update Profile</a></button>
+              <br>
+              <br>
+              <button type="button" class="btn btn-primary"><a href="{{ url_for('logout') }}" class="balls">Log Out</a></button>
 
-              
+              <br>
+              <br>
+              <form action="/userdelete" method="post" onsubmit = "return confirm('Are you sure you want to delete this account?');">
+              <input type="hidden" name="email" value="{{ session[email] }}">
+              <input type="submit" value="Delete Account" class = 'btn btn-danger mb-3'>
             </div>
-
-              
-            
           </div>
         </div>
       </div>
     </div>
-
   </div>
 {% endblock %}

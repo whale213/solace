@@ -1,0 +1,170 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}"/>
+{% endblock %}
+{% block title %} Adding Product {% endblock %}
+{% block content %}
+<style>
+    .invent-tab { background-color: var(--theme-cream); }
+</style>
+{% from "includes/_formHelper.html" import render_field %}
+<a href="/viewInventory" class="text-decoration-none prev-page p-5 d-flex flex-end"><p class="display-6">&lt; Back To Inventory</p></a>
+<div class="d-flex h-100 flex-wrap">
+    <div class="w-50 bg-form rounded-bottom m-auto pb-4">
+        <div class="form-title rounded-top text-center flex-column d-flex justify-content-sm-center m-auto w-100">
+            <p class="display-5 font-weight-bold">Add New Product</p>
+        </div>
+        <div class="d-grid justify-content-sm-center px-4">
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-part1" role="tabpanel" aria-labelledby="pills-part1-tab">
+                        <div class="progress pb-height w-100 mt-3 mb-3">
+                          <div class="progress-bar pbg-custom" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="m-auto px-4">
+                            {% set errorCount = namespace(value=0) %}
+                            {% for field, errors in form.errors.items() %}
+                                {% set errorCount.value = errorCount.value + 1 %}
+                                <p class="text-danger fs-5">Field Error {{ errorCount.value }} :</p>
+                            <p class="form-group p-2 mb-2 bg-dark text-white">{{ ",".join(errors) }}</p>
+                            {% endfor %}
+                            {% with messages = get_flashed_messages()%}
+                            {% if messages%}
+                                {% for message in messages%}
+                                   <p class="text-danger fs-5">Field Error:</p>
+                                   <p class="form-group p-2 mb-2 bg-dark text-white">{{message}}</p>
+                                {%endfor%}
+                                {%endif%}
+                            {%endwith%}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.name, class="form-control") }}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.brand, class="form-control") }}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.apparel_type, class="form-control") }}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.stock, class="form-control") }}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.price, class="form-control") }}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.discount, class="form-check list-unstyled d-flex radio-item") }}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.source, class="form-check list-unstyled d-flex radio-item") }}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-part2" role="tabpanel" aria-labelledby="pills-part2-tab">
+                        <div class="progress pb-height w-100 mt-3 mb-3">
+                          <div class="progress-bar pbg-custom" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                       <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.category, class="form-control") }}
+                       </div>
+                        <div class="form-group form-control-lg form-check form-input mb-1">
+                            {{ render_field(form.sizes, class="list-unstyled fs-5") }}
+                        </div>
+                        <div class="form-group form-control-lg form-check form-input mb-1">
+                            {{ render_field(form.colours, class="list-unstyled fs-5") }}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            <label for="image">Product Image *</label><br/>
+                            <input type="file" required="required" name="image" id="image">
+                            {% with messages = get_flashed_messages()%}
+                            {% if messages%}
+                                {% for message in messages%}
+                                   <p class="text-danger fs-5">{{ message }}</p>
+                                {%endfor%}
+                                {%endif%}
+                            {%endwith%}
+                        </div>
+                        <div class="form-group form-control-lg form-input mb-1">
+                            {{ render_field(form.description, class="form-control") }}
+                       </div>
+                    </div>
+                </div>
+                <div class="nav nav-pills m-3 d-block" id="pills-tab" role="tablist">
+                    <button class="nav-link active part-1-form w-100 mb-2" id="pills-part1-tab" data-bs-toggle="pill" data-bs-target="#pills-part1" type="button" role="tab" aria-controls="pills-part1" aria-selected="true">Part 1 Of Form</button>
+                    <button class="nav-link part-2-form w-100" id="pills-part2-tab" data-bs-toggle="pill" data-bs-target="#pills-part2" type="button" role="tab" aria-controls="pills-part2" aria-selected="false">Part 2 Of Form</button>
+                </div>
+                <input type="submit" value="Preview" name="submit_btn" class="btn-custom border-0 rounded mx-3 width-95 reduce"/>
+                {% if not preview %}
+                    <button type="button" class="btn btn-dark text-pink width-95 mx-3 mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      Confirm Details
+                    </button>
+                    <!-- Bootstrap Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Adding New Product Without Preview Alert</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <span class="text-danger">WARNING</span>, you are about to add this product without previewing,
+                              <span class="text-danger">please ensure all product details are filled and correct.</span>
+                              Do you still wish to proceed without checking?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger h-50" data-bs-dismiss="modal">No, I wish to preview</button>
+                            <input type="submit" value="Confirm Details"  name="submit_btn" class="btn btn-dark border-0 rounded text-pink px-2"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                {% else %}
+                    <input type="submit" value="Confirm Details"  name="submit_btn" class="btn btn-dark border-0 rounded mx-3 width-95 text-pink reduce mt-2"/>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+    <div class="width-35 m-auto">
+        <p class="fs-3 text-center">Product Preview</p>
+        <div class="d-grid justify-content-center m-auto text-center bg-preview rounded">
+            {% if preview %}
+                <img src="{{ url_for('static', filename='product_images/'+ img )}}" class="width-90 m-auto"/>
+                <p class="fs-3">{{ name }}</p>
+                <p class="fs-4 fw-bold">{{ price }}</p>
+                <p class="fs-4"><span class="text-danger">{{ stock }}</span> remaining</p>
+            {% else %}
+                <img src="{{ url_for('static', filename='images/blank_shirt_template.png') }}" class="width-90 m-auto"/>
+                <p class="fs-3">Title Of Apparel</p>
+                <p class="fs-4 fw-bold">Price Of Apparel</p>
+                <p class="fs-4 text-danger">Stock Remaining</p>
+            <br/><br/>
+            {% endif %}
+        </div>
+        <br/><br/>
+        <p class="fs-3 text-center">Other Details</p>
+        <div class="d-grid justify-content-center m-auto text-center bg-preview rounded">
+            <br/>
+            {% if preview %}
+                <p class="fs-4">{{ brand + source}}</p>
+                {% if discount == 1 %}
+                <p class="fs-4">Discounted: Yes</p>
+                {% else %}
+                <p class="fs-4">Discounted: No</p>
+                {% endif %}
+                <p class="fs-4">{{ apparel_type + " for " + category }}</p>
+                <p class="fs-4">{{ sizes }}</p>
+                <p class="fs-4">{{ colours }}</p>
+                <p class="fs-4">{{ description }}</p>
+            {% else %}
+                <p class="fs-4">Brand and Source</p>
+                <p class="fs-4">Applicable For Promo Code</p>
+                <p class="fs-4">Apparel Type and Category</p>
+                <p class="fs-4">Sizes</p>
+                <p class="fs-4">Colours</p>
+                <p class="fs-5">Description</p>
+            <br/>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<br/><br/>
+{% endblock %}
