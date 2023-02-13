@@ -13,6 +13,10 @@ app.config["PORT_NUMBER"] = 5000
 app.config["SECRET_KEY"] = "secretkey"
 app.secret_key = app.config["SECRET_KEY"]
 
+# Account Management
+# 
+# # Customer Transaction
+
 # Customer Support
 app.register_blueprint(solace_homepage)
 app.register_blueprint(customer_inquiries)
@@ -23,11 +27,13 @@ app.register_blueprint(customer_faq)
 app.register_blueprint(staff_add_faq)
 app.register_blueprint(staff_delete_faq)
 
-# Blueprint views / routes for app
+# Report Generation
 app.register_blueprint(reporthome)
 app.register_blueprint(reportcreate)
 app.register_blueprint(reportdelete)
 app.register_blueprint(reportupdate)
+
+# Staff Transaction
 
 
 @app.route('/')
