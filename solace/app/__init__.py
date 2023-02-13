@@ -7,6 +7,11 @@ from routes.customer_support.cust_inquiries import solace_homepage, customer_inq
 from routes.customer_support.faq_table import faq_insert_query, f1, f2,f3,f4,f5,f6
 from routes.report_generation.staff_report_views import reporthome, reportcreate, reportdelete, reportupdate
 from reportdatabase import reportTableAttributes
+from staff_transaction_db import Config
+
+from routes.staff_transaction.inventory.inventory_views import view_settings, view_inventory, add_Product, edit_Product, delete_Product
+from routes.staff_transaction.inventory.dashboard_views import view_bar_chart, view_pie_chart, view_invent_dashboard, get_excel_downloadable
+from routes.staff_transaction.donation.donation_views import view_donations, approve_Donation, view_donation_details
 
 app = Flask(__name__)
 app.config["PORT_NUMBER"] = 5000
@@ -34,6 +39,18 @@ app.register_blueprint(reportdelete)
 app.register_blueprint(reportupdate)
 
 # Staff Transaction
+app.register_blueprint(get_excel_downloadable)
+app.register_blueprint(view_settings)
+app.register_blueprint(view_invent_dashboard)
+app.register_blueprint(view_bar_chart)
+app.register_blueprint(view_pie_chart)
+app.register_blueprint(view_inventory)
+app.register_blueprint(add_Product)
+app.register_blueprint(edit_Product)
+app.register_blueprint(delete_Product)
+app.register_blueprint(view_donations)
+app.register_blueprint(approve_Donation)
+app.register_blueprint(view_donation_details)
 
 
 @app.route('/')
