@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, Blueprint
 from models.Thriftstore import Thriftstore
-from forms.staff_transaction_forms import ApprovalForm
+from forms.staff_transaction.staff_transaction_forms import ApprovalForm
 from wtforms import ValidationError
 from datetime import date
 

@@ -1,7 +1,7 @@
 from werkzeug.utils import secure_filename
 from flask import render_template, request, redirect, Blueprint, flash
 from models.Thriftstore import Thriftstore
-from forms.staff_transaction_forms import ProductForm, SearchProductForm, InputSettingForm
+from forms.staff_transaction.staff_transaction_forms import ProductForm, SearchProductForm, InputSettingForm
 from models.Product import Product
 from datetime import date
 import os
