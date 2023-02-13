@@ -1,0 +1,156 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}"/>
+{% endblock %}
+{% block title %} Managing Donations {% endblock %}
+{% block content %}
+<style>
+    .donate-tab { background-color: var(--theme-cream); }
+</style>
+<div class="d-flex form-title m-5 p-4 rounded">
+    <img src="{{ url_for('static', filename='images/p-fall-wallpaper.jpg') }}" alt="staff-img" class="staff-profile-img">
+    <p class="mt-4 mx-4 display-6">Welcome back, it is {{ today }}</p>
+</div>
+  {% set pendingCount = namespace(value=0) %}
+  {% for donation in range(donations | length) %}
+    {% if donations[donation][4] != "Pending" %}
+        {% set pendingCount.value = pendingCount.value + 1 %}
+    {% endif %}
+  {% endfor %}
+<br/><br/>
+{% if pendingCount.value > 0 %}
+    <p class=" display-6 m-5">There is {{ pendingCount.value }} pending donations in inventory.</p>
+{% else %}
+    <p class=" display-6 m-5">There are no pending donations in inventory.</p>
+{% endif %}
+<br/><br/>
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link active text-orange fs-5" id="nav-pending-tab" data-bs-toggle="tab" data-bs-target="#nav-pending" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+        Pending Donations
+      </button>
+      <button class="nav-link text-orange fs-5" id="nav-approved-tab" data-bs-toggle="tab" data-bs-target="#nav-approved" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+        Approved Donations
+      </button>
+      <button class="nav-link text-orange fs-5" id="nav-rejected-tab" data-bs-toggle="tab" data-bs-target="#nav-rejected" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+        Rejected Donations
+      </button>
+    </div>
+  </nav>
+  <div class="tab-content bg-light" id="nav-tabContent">
+    <br/><br/>
+    <div class="tab-pane fade show active" id="nav-pending" role="tabpanel" aria-labelledby="nav-pending">
+        <div class="table-responsive">
+            <table class="m-5 table shadow">
+              <thead class="bg-light">
+                <tr class="fs-4 text-orange">
+                  <th>Donation ID</th>
+                  <th>User ID</th>
+                  <th>General Condition</th>
+                  <th>Donation Quantity</th>
+                  <th>Delivery</th>
+                  <th>Approval Status</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white fs-5">
+                  {% for donation in range(donations | length) %}
+                    {% if donations[donation][4] == "Pending" %}
+                    <tr>
+                        <td>{{ donations[donation][0] }}</td>
+                        <td>{{ donations[donation][1] }}</td>
+                        <td>{{ donations[donation][3] }}</td>
+                        <td>{{ donations[donation][2] }}</td>
+                        {% if donations[donation][6] == "Delivery" %}
+                        <td>Yes</td>
+                        {% else %}
+                        <td>No</td>
+                        {% endif %}
+                        <td>{{ donations[donation][4] }}</td>
+                        <!--URL FOR and pass value to function-->
+                        <td class="text-center"><a href="/approveDonation/{{ donations[donation][0] }}" class="btn btn-dark text-pink fs-5">View For Approval</a></td>
+                    </tr>
+                    {% endif %}
+                  {% endfor %}
+              </tbody>
+          </table>
+          </div>
+    </div>
+    <div class="tab-pane fade" id="nav-approved" role="tabpanel" aria-labelledby="nav-approved">
+        <div class="table-responsive">
+          <table class="m-5 table shadow">
+            <thead class="bg-light">
+              <tr class="fs-4 text-orange">
+                  <th>Donation ID</th>
+                  <th>User ID</th>
+                  <th>General Condition</th>
+                  <th>Donation Quantity</th>
+                  <th>Delivery</th>
+                  <th>Approval Status</th>
+                  <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white fs-5">
+                {% for donation in range(donations | length) %}
+                  {% if donations[donation][4] == "Approved" %}
+                  <tr>
+                      <td>{{ donations[donation][0] }}</td>
+                      <td>{{ donations[donation][1] }}</td>
+                      <td>{{ donations[donation][3] }}</td>
+                      <td>{{ donations[donation][2] }}</td>
+                      {% if donations[donation][6] == "Delivery" %}
+                      <td>Yes</td>
+                      {% else %}
+                      <td>No</td>
+                      {% endif %}
+                      <td>{{ donations[donation][4] }}</td>
+                      <!--URL FOR and pass value to function-->
+                      <td class="text-center"><a href="/viewDonationDetails/{{ donations[donation][0] }}" class="btn btn-dark text-pink fs-5">View Details</a></td>
+                  </tr>
+                  {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-rejected" role="tabpanel" aria-labelledby="nav-rejected">
+        <div class="table-responsive">
+          <table class="m-5 table shadow">
+          <thead class="bg-light">
+           <tr class="fs-4 text-orange">
+            <th>Donation ID</th>
+            <th>User ID</th>
+            <th>General Condition</th>
+            <th>Donation Quantity</th>
+            <th>Delivery</th>
+            <th>Approval Status</th>
+            <th class="text-center">Actions</th>
+           </tr>
+          </thead>
+            <tbody class="bg-white fs-5">
+                {% for donation in range(donations | length) %}
+                  {% if donations[donation][4] == "Rejected" %}
+                  <tr>
+                      <td>{{ donations[donation][0] }}</td>
+                      <td>{{ donations[donation][1] }}</td>
+                      <td>{{ donations[donation][3] }}</td>
+                      <td>{{ donations[donation][2] }}</td>
+                      {% if donations[donation][6] == "Delivery" %}
+                      <td>Yes</td>
+                      {% else %}
+                      <td>No</td>
+                      {% endif %}
+                      <td>{{ donations[donation][4] }}</td>
+                      <!--URL FOR and pass value to function-->
+                      <td class="text-center"><a href="/viewDonationDetails/{{ donations[donation][0] }}" class="btn btn-dark text-pink fs-5">View Details</a></td>
+                  </tr>
+                  {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+  </div>
+
+
+{% endblock %}

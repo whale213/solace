@@ -1,0 +1,137 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='inventory_anim.css')}}">
+{% endblock %}
+{% block title %} Inventory Dashboard {% endblock %}
+{% block content %}
+<style>
+    .invent-tab { background-color: var(--theme-cream); }
+</style>
+{% from "includes/_formHelper.html" import render_field %}
+<div class="container cssanimation-2 fadeInTop">
+  {% with messages = get_flashed_messages()%}
+    {% if messages %}
+    <div class="alert bg-dark mt-5">
+        <button type="button" class="close btn btn-light" data-dismiss="alert">&times;</button>
+        <span class="text-pink fs-5 text-center">{{ messages[0] }}</span>
+    </div>
+    {% endif %}
+  {% endwith %}
+</div>
+<a href="/viewInventory" class="text-decoration-none prev-page p-5 d-flex flex-end"><p class="display-6">&lt; Back To Inventory</p></a>
+<br/><br/><br/>
+<div class="d-flex justify-content-between">
+  <p class=" display-6 mx-5">Product Form Settings</p>
+    <div class="">
+    <button type="button" class="fs-4 btn btn-dark text-pink" data-bs-toggle="modal" data-bs-target="#addInput">
+      &plus; New Input
+    </button>
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="addInput" tabindex="-1" aria-labelledby="addinputModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addinputModalLabel">Adding a New Input</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body p-3">
+                  <form action="" method="POST">
+                    <div class="form-group form-control-sm form-input mb-1 w-100">
+                      {{ render_field(form.selected_input, class="form-control") }}
+                    </div>
+                    <div class="form-group form-control-sm form-input mb-1 w-100">
+                      {{ render_field(form.new_input, class="form-control") }}
+                    </div>
+                    <div class="d-flex justify-content-end p-2">
+                      <input type="submit" value="Add Input" name="submit_input" class="btn btn-dark text-pink fs-5">
+                    </div>
+                  </form>
+              </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="fs-4 btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#deleteInput">
+        Delete An Input
+    </button>
+      <div class="modal fade" id="deleteInput" tabindex="-1" aria-labelledby="deleteinputModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteinputModalLabel">Deleting an Input</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3">
+                    <form action="" method="POST">
+                      <div class="form-group form-control-sm form-input mb-1 w-100">
+                        {{ render_field(form.selected_input, class="form-control") }}
+                      </div>
+                      <div class="form-group form-control-sm form-input mb-1 w-100">
+                        {{ render_field(form.new_input, class="form-control") }}
+                      </div>
+                      <div class="d-flex justify-content-end p-2">
+                        <input type="submit" value="Delete Input" name="submit_input" class="btn btn-dark text-pink fs-5">
+                      </div>
+                    </form>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<br/><br/><br/>
+<div>
+  <ul class="nav nav-tabs fs-5" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active text-orange" id="Brands-tab" data-bs-toggle="tab" data-bs-target="#Brands" type="button" role="tab" aria-controls="Brands" aria-selected="true">Brands</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link text-orange" id="Apparels-tab" data-bs-toggle="tab" data-bs-target="#Apparels" type="button" role="tab" aria-controls="Apparels" aria-selected="false">Apparels</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link text-orange" id="Categories-tab" data-bs-toggle="tab" data-bs-target="#Categories" type="button" role="tab" aria-controls="Categories" aria-selected="false">Categories</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="Brands" role="tabpanel" aria-labelledby="Brands-tab">
+        <div class="bg-light table-responsive">
+            <table class="table">
+                <tbody>
+                    {% for brand in brands %}
+                    <tr>
+                        <td class="p-4 fs-5">{{ brand }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="Apparels" role="tabpanel" aria-labelledby="Apparels-tab">
+      <div class="bg-light table-responsive">
+        <table class="table">
+            <tbody>
+                {% for apparel in apparels %}
+                <tr>
+                    <td class="p-4 fs-5">{{ apparel }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="tab-pane fade" id="Categories" role="tabpanel" aria-labelledby="Categories-tab">
+      <div class="bg-light table-responsive">
+        <table class="table">
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td class="p-4 fs-5">{{ category }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
