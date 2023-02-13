@@ -33,7 +33,7 @@ class Inquiry:
 
 @solace_homepage.route("/")
 def index():
-    return render_template("customer_support/Homepage.html")
+    return render_template("customer_support/homepage.html")
 
 @customer_inquiries.route("/submit", methods=["POST", "GET"])
 def createinquiry():
