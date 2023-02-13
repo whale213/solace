@@ -135,11 +135,23 @@ def user_mydonations():
 
 
 if __name__ == "__main__":
-    # db = Thriftstore()
+    db = Thriftstore()
     # db.create_table("customerinfo", reportTableAttributes)
     # db.close_connection()
     
-    # db.create_table('faq', faqTable)
+    usersTableAttributes = '''
+     user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+     name TEXT NOT NULL,
+     email TEXT NOT NULL,
+     phone_number TEXT NOT NULL, 
+     password TEXT NOT NULL,
+     birthday TEXT NOT NULL, 
+     gender TEXT NOT NULL,
+     addresses TEXT NOT NULL,
+     card_details TEXT NOT NULL
+    '''  
+
+    db.create_table('Users', usersTableAttributes)
 
     # db.insert_into_table(faq_insert_query, f1)
     # db.insert_into_table(faq_insert_query, f2)
@@ -156,22 +168,8 @@ if __name__ == "__main__":
 
     # # db.delete_by_id_from_table('faq', 'Id', '')
 
-
-
-
     # db.close_connection()
-#     db = Thriftstore()
-#     usersTableAttributes = '''
-#      user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-#      name TEXT NOT NULL,
-#      email TEXT NOT NULL,
-#      phone_number TEXT NOT NULL, 
-#      password TEXT NOT NULL,
-#      birthday TEXT NOT NULL, 
-#      gender TEXT NOT NULL,
-#      addresses TEXT NOT NULL,
-#      card_details TEXT NOT NULL
-#  '''    
+#     db = Thriftstore() 
 # #     db = Thriftstore()
 # #     db.drop_table("Users")
 #     db.create_table("Users", usersTableAttributes)
