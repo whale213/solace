@@ -1,0 +1,62 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+<!-- Insert Any Static CSS You Need Here -->
+<!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% endblock %}
+{% block title %} 
+Report Generation
+{% endblock %}
+
+{% block content %}
+<style> 
+  .gen-rep-tab { background-color: var(--theme-cream); }
+</style>
+<div class="container">
+    <h1 class="text-center my-5">Report Generation</h1>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="/report-generation-home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/customer-reports-create">Create Report</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/customer-reports-delete">Delete Report</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/customer-reports-update">Update Report</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="/customer-reports-read">Read Report</a>
+          </li> -->
+        </ul>
+        <table class="table">
+          <tr>
+            <th>Order ID</th>
+            <th>Gender</th>
+            <th>Date (YYYY-MM-DD)</th>
+            <th>Items</th>
+            <th>Total Cost Rounded up to Nearest Dollar($)</th>
+          </tr>
+          {% for orders in getcustomerinfo %}
+          <!--<tr class="d-flex"></tr>-->
+            <td>{{ orders[0] }}</td> <!-- prints out the elements 1 by 1 for example, [0][1] 0= first item in list for this case just use 0 (i think), [1]=first item in that item in list eg. [(1,male,2023-02-08,123,$12) prints out "male" while [0][0] prints out "1" etc.  -->
+            <td>{{ orders[1] }}</td>
+            <td>{{ orders[2] }}</td>
+            <td>{{ orders[3] }}</td>
+            <td>{{ orders[4] }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+    <div class="row my-5">
+      <div class="col-md-12">
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

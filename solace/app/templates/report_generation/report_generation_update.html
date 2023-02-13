@@ -1,0 +1,50 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+<!-- Insert Any Static CSS You Need Here -->
+<!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+{% endblock %}
+{% block title %} 
+Report Generation
+{% endblock %}
+
+{% block content %}
+
+<style> 
+    .gen-rep-tab { background-color: var(--theme-cream); }
+</style>
+<div class="container">
+    <h1 class="text-center my-5">Update Report</h1>
+    <form action="/customer-reports-update" method="post">
+      <div class="form-group">
+        <label for="Order_ID" class="form-label">Order ID:</label>
+        <input type="text" class="form-control" id="orderid1" name="ordid">
+      </div>
+      <div class="form-group">
+        <label for="Gender">Gender</label><br>
+        <input type="radio" id="Male" name="Gender" value="Male">
+        <label for="Male">Male</label><br>
+        <input type="radio" id="Female" name="Gender" value="Female">
+        <label for="Female">Female</label><br>
+      </div>
+      <div class="form-group">
+        <label for="Date">Date</label>
+        <input type="date" class="form-control" id="Date" name="Date" required>
+      </div>
+      <div class="form-group">
+        <label for="Items">Items</label>
+        <input type="number" class="form-control" id="Items" name="Items" required>
+      </div>
+      <div class="form-group">
+        <label for="Total_Cost">Total Cost Rounded up to Nearest Dollar($)</label>
+        <input type="number" class="form-control" id="Total_Cost" name="Total_Cost" required>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Confirm" class="btn btn-primary">
+        <a href="/report-generation-home" class="btn btn-secondary">Back</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+
+ 

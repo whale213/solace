@@ -1,0 +1,23 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+<!-- Insert Any Static CSS You Need Here -->
+<!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+{% endblock %}
+{% block title %} 
+Report Generation
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<style> 
+    .gen-rep-tab { background-color: var(--theme-cream); }
+</style>
+<h1 class="display-4">Delete Report</h1>
+<form action="" method="post" onsubmit = 'return alert("Report has been deleted!")'>
+<form method="POST" action="">
+    <div class="form-group">
+        {{ render_field(form.order_id, class="form-control") }}
+    </div>
+    <input type="submit" value="Submit" class="btn btn-primary">
+    <a href="/report-generation-home" class="btn btn-secondary">Back</a>
+</form>
+{% endblock %}

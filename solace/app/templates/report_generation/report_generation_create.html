@@ -1,0 +1,39 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+<!-- Insert Any Static CSS You Need Here -->
+<!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+{% endblock %}
+{% block title %} 
+Report Generation
+{% endblock %}
+
+{% block content %}
+
+<style> 
+    .gen-rep-tab { background-color: var(--theme-cream); }
+</style>
+<div class="container mt-5">
+    <h2>Create Report</h2>
+    <form action="" method="post" onsubmit = 'return alert("Report has been created!")'>
+        <div class="form-group">
+            <label for="gender">Gender:</label><br>
+            <input type="radio" name="Gender" value="Male" checked required> Male<br>
+            <input type="radio" name="Gender" value="Female" required> Female<br>
+        </div>
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" class="form-control" id="date" name="Date" required>
+        </div>
+        <div class="form-group">
+            <label for="items">Items:</label>
+            <input type="number" class="form-control" id="items" name="Items" required>
+        </div>
+        <div class="form-group">
+            <label for="total_cost">Total Cost Rounded up to Nearest Dollar($)</label>
+            <input type="number" class="form-control" id="total_cost" name="Total_Cost" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Confirm</button>
+        <a href="/report-generation-home" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+{% endblock %}
