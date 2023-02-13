@@ -49,30 +49,6 @@ WHERE Category = ?
 '''
 
 
-db = Thriftstore()
-
-db.create_table('faq', faqTable)
-
-db.insert_into_table(faq_insert_query, f1)
-db.insert_into_table(faq_insert_query, f2)
-db.insert_into_table(faq_insert_query, f3)
-db.insert_into_table(faq_insert_query, f4)
-db.insert_into_table(faq_insert_query, f5)
-db.insert_into_table(faq_insert_query, f6)
-
-# db.update_table_item(faq_update_query, ('Clothes Donation 1', 3))
-# db.update_table_item(faq_update_query, ('Clothes Donation 2', 4))
-
-# db.question(faq_update_query, ('Clothes Donation 1', 3))
-# db.question(faq_update_query, ('Clothes Donation 2', 4))
-
-# db.delete_by_id_from_table('faq', 'Id', '')
-
-
-
-
-db.close_connection()
-
 
 
 

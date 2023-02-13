@@ -4,6 +4,8 @@ from acct_mgmt_classes import User
 from models.Thriftstore import Thriftstore
 from routes.customer_support.faq_table import faqTable
 from routes.customer_support.cust_inquiries import solace_homepage, customer_inquiries, staff_read_inquiries, staff_reply_inquiries, staff_delete_inquiries, customer_faq, staff_add_faq, staff_delete_faq
+from routes.customer_support.faq_table import faq_insert_query, f1, f2,f3,f4,f5,f6
+
 
 app = Flask(__name__)
 app.config["PORT_NUMBER"] = 5000
@@ -127,6 +129,29 @@ def user_mydonations():
 
 
 if __name__ == "__main__":
+    # db = Thriftstore()
+
+    # db.create_table('faq', faqTable)
+
+    # db.insert_into_table(faq_insert_query, f1)
+    # db.insert_into_table(faq_insert_query, f2)
+    # db.insert_into_table(faq_insert_query, f3)
+    # db.insert_into_table(faq_insert_query, f4)
+    # db.insert_into_table(faq_insert_query, f5)
+    # db.insert_into_table(faq_insert_query, f6)
+
+    # # db.update_table_item(faq_update_query, ('Clothes Donation 1', 3))
+    # # db.update_table_item(faq_update_query, ('Clothes Donation 2', 4))
+
+    # # db.question(faq_update_query, ('Clothes Donation 1', 3))
+    # # db.question(faq_update_query, ('Clothes Donation 2', 4))
+
+    # # db.delete_by_id_from_table('faq', 'Id', '')
+
+
+
+
+    # db.close_connection()
 #     db = Thriftstore()
 #     usersTableAttributes = '''
 #      user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
