@@ -26,7 +26,10 @@ delete_Product = Blueprint("deleteProduct", __name__)
 edit_Product = Blueprint("editProduct", __name__)
 
 # Set upload folder file path for product images
-upload_folder = "static/product_images"
+upload_folder = os.path.abspath("solace/app/static/product_images")
+# To ensure that if somehow folder doesnt exist it will be created
+if not os.path.exists(upload_folder):
+    os.makedirs(upload_folder)
 # Set Accepted Extensions for images
 ACCEPETED_EXTENSIONS = ["jpeg","JPEG", "jpg", "JPG", "png", "PNG"]
 
