@@ -1,5 +1,6 @@
-from flask import Flask, request, redirect, url_for, render_template
-from form import RegisterForm, LoginForm
+import hashlib
+from flask import Flask, request, redirect, session, url_for, render_template, flash
+from form import RegisterForm, LoginForm, UpdateUserForm
 from acct_mgmt_classes import User
 from models.Thriftstore import Thriftstore
 from routes.customer_support.faq_table import faqTable
@@ -30,20 +31,33 @@ app.register_blueprint(reportdelete)
 app.register_blueprint(reportupdate)
 
 
-@app.route('/')
-def home():
+@app.route('/login', methods=["GET", "POST"])
+def login():
     user_login_form = LoginForm(request.form)
     form = user_login_form
 
     if request.method == "POST" and user_login_form.validate():
+        email = user_login_form.email.data
+        password = user_login_form.password.data
+        if is_valid(email, password):
+            session['email'] = email
+            return redirect("/profile")
+        else:
+            # flash("User does not exist")  
+            return redirect("/login")
 
-        user = User(user_login_form.email.data,
-                    user_login_form.password.data)
+    return render_template("account_management/loginUser.html", form=form)
 
-        pass
-    return render_template("account_management/loginUser.html", form=(user_login_form))
+def is_valid(email, password):
+    db = Thriftstore()
+    db_cur = db.get_cursor()
+    data = db_cur.execute('SELECT email, password FROM Users').fetchall()
+    for row in data:
+        if row[0] == email and row[1] == hashlib.md5(password.encode()).hexdigest():
+            return True
+    return False
 
-    
+
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
     user_registration_form = RegisterForm(request.form)
@@ -51,7 +65,7 @@ def register_user():
 
     if request.method == 'POST':
         print(user_registration_form.name.data)
-                    
+
         db = Thriftstore()
         
         user_insert_query = '''INSERT INTO Users(
@@ -63,42 +77,112 @@ def register_user():
             gender,
             addresses,
             card_details)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?); 
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?);
         '''
 
-        user = User(user_registration_form.name.data, user_registration_form.email.data,
-                    user_registration_form.phone_number.data, user_registration_form.password.data, user_registration_form.birthday.data,
+        db_cur = db.get_cursor()
+        data = db_cur.execute('SELECT email FROM Users').fetchall()
+        for row in data:
+            print(row[0])
+            if user_registration_form.email.data == row[0]:
+                flash('User already exists!')
+                return redirect('/register')
+
+        user = User(user_registration_form.name.data, user_registration_form.email.data, user_registration_form.phone_number.data, 
+                    hashlib.md5(user_registration_form.password.data.encode()).hexdigest(), user_registration_form.birthday.data, 
                     user_registration_form.gender.data, user_registration_form.addresses.data, user_registration_form.card_details.data)
 
         db.insert_into_table(user_insert_query, user)
         db.close_connection()
-        return redirect(url_for(home))
+        return redirect("/login")
     return render_template('account_management/register.html', form=user_registration_form)
 
 
-@app.route('/loginUser', methods=['GET', 'POST'])
-def login_user():
-    user_login_form = LoginForm(request.form)
+# @app.route('/loginUser', methods=['GET', 'POST'])
+# def login_user():
+#     user_login_form = LoginForm(request.form)
     
-    if request.method == 'POST' and user_login_form.validate():
-        print(user_login_form.email.data)
-        print(user_login_form.password.data)
-        db = Thriftstore()
-        users = db.get_all_items("Users")
-        for i in range(len(users)):
-           if users[i][2] == user_login_form.email.data and users[i][4] == user_login_form.password.data:
-            print("Shit works")
-            return redirect("/profile")
-    return render_template('loginUser.html', form=user_login_form)
-        
+#     if request.method == 'POST' and user_login_form.validate():
+#         print(user_login_form.email.data)
+#         print(user_login_form.password.data)
+#         db = Thriftstore()
+#         users = db.get_all_items("Users")
+#         for i in range(len(users)):
+#            if users[i][2] == user_login_form.email.data and users[i][4] == user_login_form.password.data:
+#             print("Shit works")
+#             return redirect("/profile")
+#     return render_template('loginUser.html', form=user_login_form)
 
 
 @app.route("/profile", methods=['GET', 'POST'])
 def user_profile():
     db = Thriftstore()
-    users = db.get_all_items("Users")
+    db_cur = db.get_cursor()
+    print(session["email"]) 
+    user_info = 0
+    data = db_cur.execute("SELECT * FROM Users").fetchall()
+    for row in data:
+        # print(row)
+        if row[2] == session["email"]:
+            user_info = row
+    
+    # Loop through all user data in db
+    # check if session email equal to any in data
+    # if have then append to user data
     db.close_connection()
-    return render_template("account_management/insert_acc.html", users = users)
+    return render_template("account_management/insert_acc.html", user_info=user_info)
+
+@app.route("/profileupdate", methods=["POST", "GET"])
+def updateprofile():
+    user_update_form = UpdateUserForm(request.form)
+    print(request.form)
+
+    if request.method == 'POST':
+        print(user_update_form.name.data)
+
+        db = Thriftstore()
+        db_cur = db.get_cursor()
+        data = db_cur.execute("SELECT * FROM Users").fetchall()
+        user_id = 0
+        for row in data:
+            if row[2] == session["email"]:
+                user_id = row[0]
+
+        update_user_query = '''UPDATE Users
+        SET name = ?,
+        email = ?,
+        phone_number = ?,
+        birthday = ?,
+        gender = ?
+        WHERE user_id = ?
+        '''
+        user_data = (user_update_form.name.data, user_update_form.email.data, user_update_form.phone_number.data,
+                     user_update_form.birthday.data, user_update_form.gender.data, user_id)
+        print(user_data)
+        db.update_table_item(update_user_query, user_data)
+        session["email"] = user_update_form.email.data
+        db.close_connection()
+        # flash("User details updated!")
+        # print(data)
+        return redirect("/profile")
+    return render_template('account_management/insert_acc_update.html', form=user_update_form)
+
+    # print(session["email"]) 
+    # user_data = []
+    # data = db_cur.execute("SELECT * FROM Users").fetchall()
+    # for row in data:
+    #     # print(row)
+    #     if row[2] == session["email"]:
+    #         user_data.append(row[1])
+    #         user_data.append(row[2])
+    #         user_data.append(row[3])
+    #         user_data.append(row[5])
+    #         user_data.append(row[6])
+
+    #         print(user_data)
+
+    db.close_connection()        
+    return render_template("account_management/insert_acc_update.html")
 
 @app.route("/paymentmethods")
 def user_paymentmethods():
@@ -130,7 +214,30 @@ def user_mydonations():
     users = db.get_all_items("Users")
     db.close_connection()
 
-    return render_template("account_management/my_donations.html", users = users)         
+    return render_template("account_management/my_donations.html", users = users)    
+
+@app.route("/logout")
+def logout():
+    session.pop('email', None)
+    return redirect(url_for('login'))
+
+@app.route("/userdelete", methods=["POST", "GET"])
+def user_delete():
+    db = Thriftstore()
+    db_cur = db.get_cursor()
+    print(session["email"]) 
+    data = db_cur.execute("SELECT * FROM Users").fetchall()
+    for row in data:
+        if row[2] == session["email"]:
+            user_id = row[0]
+    
+    db.delete_by_id_from_table('Users','user_id', user_id)
+    db.close_connection()
+
+    return redirect("/login")
+
+
+
 
 
 
@@ -150,8 +257,8 @@ if __name__ == "__main__":
      addresses TEXT NOT NULL,
      card_details TEXT NOT NULL
     '''  
-
-    db.create_table('Users', usersTableAttributes)
+    # db.drop_table("Users")
+    # db.create_table('Users', usersTableAttributes)
 
     # db.insert_into_table(faq_insert_query, f1)
     # db.insert_into_table(faq_insert_query, f2)
