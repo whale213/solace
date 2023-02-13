@@ -22,8 +22,6 @@ def home():
     return render_template("account_management/loginUser.html", form=(user_login_form))
 
     
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
     user_registration_form = RegisterForm(request.form)
@@ -59,17 +57,25 @@ def register_user():
 @app.route('/loginUser', methods=['GET', 'POST'])
 def login_user():
     user_login_form = LoginForm(request.form)
+    
     if request.method == 'POST' and user_login_form.validate():
-        pass
+        print(user_login_form.email.data)
+        print(user_login_form.password.data)
+        db = Thriftstore()
+        users = db.get_all_items("Users")
+        for i in range(len(users)):
+           if users[i][2] == user_login_form.email.data and users[i][4] == user_login_form.password.data:
+            print("Shit works")
+            return redirect("/profile")
     return render_template('loginUser.html', form=user_login_form)
+        
 
 
-@app.route("/profile")
+@app.route("/profile", methods=['GET', 'POST'])
 def user_profile():
     db = Thriftstore()
     users = db.get_all_items("Users")
     db.close_connection()
-
     return render_template("account_management/insert_acc.html", users = users)
 
 @app.route("/paymentmethods")
@@ -107,19 +113,21 @@ def user_mydonations():
 
 
 if __name__ == "__main__":
-#     usersTableAttributes = '''
-#     user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-#     name TEXT NOT NULL,
-#     email TEXT NOT NULL,
-#     phone_number TEXT NOT NULL, 
-#     password TEXT NOT NULL,
-#     birthday TEXT NOT NULL, 
-#     gender TEXT NOT NULL,
-#     addresses TEXT NOT NULL,
-#     card_details TEXT NOT NULL
-# '''    
+
 #     db = Thriftstore()
-#     db.drop_table("Users")
+#     usersTableAttributes = '''
+#      user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+#      name TEXT NOT NULL,
+#      email TEXT NOT NULL,
+#      phone_number TEXT NOT NULL, 
+#      password TEXT NOT NULL,
+#      birthday TEXT NOT NULL, 
+#      gender TEXT NOT NULL,
+#      addresses TEXT NOT NULL,
+#      card_details TEXT NOT NULL
+#  '''    
+# #     db = Thriftstore()
+# #     db.drop_table("Users")
 #     db.create_table("Users", usersTableAttributes)
     app.run(debug=True)
 
