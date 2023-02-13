@@ -174,7 +174,9 @@ if __name__ == "__main__":
      card_details TEXT NOT NULL
     '''  
 
-    db.create_table('Users', usersTableAttributes)
+    # db.create_table('Users', usersTableAttributes)
+    # conf = Config()
+    # conf.resetTablesInDB()
 
     # db.insert_into_table(faq_insert_query, f1)
     # db.insert_into_table(faq_insert_query, f2)
