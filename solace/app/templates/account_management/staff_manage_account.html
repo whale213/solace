@@ -1,7 +1,9 @@
 {% extends "includes/_staff_base.html" %}
 {% block link %}
 <!-- Insert Any Static CSS You Need Here -->
+
 <!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+
 {% endblock %}
 {% block title %} 
 <!-- Insert Any Title You Want Here -->
@@ -12,7 +14,65 @@
     /* REFER to staff nav html and look for your corresponding tab class to add: */
     /* Eg. .acc-tab refers to the tab in the navigation for account management */
     .acc-tab { background-color: var(--theme-cream); }
+    
+table   {margin: 100px 0px;
+        border: 2px;
+        text-align: center;
+        font-size: large;
+}
+    
+td      {padding: 30px;
+         padding-right: 120px;
+         padding-left: 120px;
+}
+
+th      {padding: 30px;
+         padding-right: 120px;
+         padding-left: 120px;
+}
+
+tr      {padding: 30px;
+         padding-right: 120px;
+         padding-left: 120px;
+         
+}
+
 </style>
 
- <h1 class="text-center">Insert Your Content Here!</h1>
+ <h1 class="text-center">View users</h1>
+
+ <div class="table">
+    <table class="m-5" id="tbUser">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+
+            <th>Delete</th>
+
+        </tr>
+        {% for id in users %}
+        <tr>
+            <td>{{ id[0] }}</td>
+            <td>{{ id[1] }}</td>
+            <td>{{ id[2] }}</td>
+
+            <!-- <td>
+              <form>
+                <input type="hidden" name="id" value="{{ id[0] }}">
+                <input type="submit" value="View" formaction="/update" class = 'btn btn-primary mb-3'>
+              </form>
+            </td> -->
+            
+            <td>
+              <form action="/staff_userdelete" method="post" onsubmit = "return confirm('Are you sure you want to delete User ID {{ id[0] }}?');">
+                <input type="hidden" name="user_id" value="{{ id[0] }}">
+                <input type="submit" value="Delete User" class = 'btn btn-primary mb-3'>
+              </form>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}

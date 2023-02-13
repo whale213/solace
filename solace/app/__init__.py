@@ -264,24 +264,64 @@ def user_delete():
 
 
 
+@app.route("/staff/manageaccount")
+def staff_accountmanagement():
+    db = Thriftstore()
+    
+    users = db.get_all_items("users")
+
+    db.close_connection()
+
+    return render_template("account_management/staff_manage_account.html", users=users)
+
+
+@app.route("/staff_userdelete", methods=["POST"])
+def delete():
+    id = request.form.get("user_id")
+    db = Thriftstore()
+    db.delete_by_id_from_table('Users', 'user_id', id)
+    db.close_connection()
+
+    return redirect('/staff/manageaccount')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     db = Thriftstore()
     # db.create_table("customerinfo", reportTableAttributes)
     # db.close_connection()
     
-    usersTableAttributes = '''
-     user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-     name TEXT NOT NULL,
-     email TEXT NOT NULL,
-     phone_number TEXT NOT NULL, 
-     password TEXT NOT NULL,
-     birthday TEXT NOT NULL, 
-     gender TEXT NOT NULL,
-     addresses TEXT NOT NULL,
-     card_details TEXT NOT NULL
-    '''  
+    # staffTableAttributes = '''
+    #  user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    #  name TEXT NOT NULL,
+    #  phone_number TEXT NOT NULL, 
+    # '''  
 
-    db.create_table('Users', usersTableAttributes)
+    # usersTableAttributes = '''
+    #  user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    #  name TEXT NOT NULL,
+    #  email TEXT NOT NULL,
+    #  phone_number TEXT NOT NULL, 
+    #  password TEXT NOT NULL,
+    #  birthday TEXT NOT NULL, 
+    #  gender TEXT NOT NULL,
+    #  addresses TEXT NOT NULL,
+    #  card_details TEXT NOT NULL
+    # '''  
+
+    # db.create_table('Users', usersTableAttributes)
 
     # db.insert_into_table(faq_insert_query, f1)
     # db.insert_into_table(faq_insert_query, f2)
@@ -301,8 +341,8 @@ if __name__ == "__main__":
     # db.close_connection()
 #     db = Thriftstore() 
 # #     db = Thriftstore()
-# #     db.drop_table("Users")
-#     db.create_table("Users", usersTableAttributes)
+#     db.drop_table("Users")
+    
     app.run(debug=True)
 
 
