@@ -1,0 +1,142 @@
+{% extends "includes/_staff_base.html" %}
+{% block link %}
+<!-- Insert Any Static CSS You Need Here -->
+<!-- EXAMPLE: <link rel="stylesheet" href="{{ url_for('static', filename='YourCSSFile.css') }}"/> -->
+{% endblock %}
+
+{% block title %} 
+Solace Staff Read
+{% endblock %}
+
+{% block head %} 
+{{ super() }}
+
+<style type="text/css">
+  .important { color: #336699; }
+
+  h1  {text-align: center;
+     padding: 20px 0px;}
+
+  form  {margin:50px;}
+
+  p   {text-align: center;
+       margin:30px 0px;}
+
+.ans-inq-tab {
+  background-color: var(--theme-cream);
+}
+
+  form, input {border: 15px;}
+</style>
+
+{% endblock %}
+
+{% block content %}
+<style>
+  td      {padding: 10px;}
+  th      {padding: 10px;}
+  tr      {padding: 10px;}
+
+  table   {margin: 50px 0px;
+           border: 2px;
+           text-align: center;
+           font-size: large;
+           }
+  .center {
+              margin-right: 20em;
+              margin-left: 20em;
+          }
+</style>
+
+<div class = 'center-block'>
+  <h1>Answer Inquiries</h1>
+</div>
+<div class="table">
+    <table class="m-5" id="tbUser">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Inquiry</th>
+            <th>Update</th>
+            <th>Delete</th>
+
+        </tr>
+        {% for id in inquiries %}
+        <tr>
+            <td>{{ id[0] }}</td>
+            <td>{{ id[1] }}</td>
+            <td>{{ id[2] }}</td>
+            <td>{{ id[3] }}</td>
+
+            <td>
+              <form>
+                <input type="hidden" name="id" value="{{ id[0] }}">
+                <input type="submit" value="View" formaction="/update" class = 'btn btn-primary mb-3'>
+            </form>
+            </td>
+            
+            <td>
+              <form action="/delete" method="post" onsubmit = "return confirm('Are you sure you want to delete Inquiry Id {{ id[0] }}?');">
+                <input type="hidden" name="id" value="{{ id[0] }}">
+                <input type="submit" value="Delete" class = 'btn btn-primary mb-3'>
+              </form>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+<div class = 'center-block'>
+  <h1>Update FAQ Section</h1>
+</div>
+
+<div class="table">
+    <table class="m-5" id="">
+        <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Add</th>
+            <th>Update</th>
+            <th>Delete</th>
+
+
+        </tr>
+        {% for qn in faq %}
+        <tr>
+            <td>{{ qn[0] }}</td>
+            <td>{{ qn[1] }}</td>
+            <td>{{ qn[2] }}</td>
+            <td>{{ qn[3] }}</td>
+
+            <td>
+              <form>
+                <input type="hidden" name="id" value="{{ qn[0] }}">
+                <input type="submit" value="Add" formaction="/FAQa" class = 'btn btn-primary mb-3'>
+              </form>
+            </td>
+
+            <td>
+              <form>
+                <input type="hidden" name="id" value="{{ qn[0] }}">
+                <input type="submit" value="Update" formaction="/update" class = 'btn btn-primary mb-3'>
+            </form>
+            </td>
+            <td>
+              <form action="/FAQ_delete" method="post" onsubmit = "return confirm('Are you sure you want to delete FAQ Id {{ qn[0] }}?');">
+                <input type="hidden" name="id" value="{{ qn[0] }}">
+                <input type="submit" value="Delete" class = 'btn btn-primary mb-3'>
+              </form>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table> -->
+</div>
+
+
+
+{% endblock %}

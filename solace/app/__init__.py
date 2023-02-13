@@ -1,9 +1,24 @@
 from flask import Flask, request, redirect, url_for, render_template
 from form import RegisterForm, LoginForm
 from acct_mgmt_classes import User
-from Thriftstore import Thriftstore
+from models.Thriftstore import Thriftstore
+from routes.customer_support.cust_inquiries import solace_homepage, customer_inquiries, staff_read_inquiries, staff_reply_inquiries, staff_delete_inquiries, customer_faq, staff_add_faq, staff_delete_faq
 
 app = Flask(__name__)
+app.config["PORT_NUMBER"] = 5000
+app.config["SECRET_KEY"] = "secretkey"
+app.secret_key = app.config["SECRET_KEY"]
+
+# Customer Support
+app.register_blueprint(solace_homepage)
+app.register_blueprint(customer_inquiries)
+app.register_blueprint(staff_read_inquiries)
+app.register_blueprint(staff_reply_inquiries)
+app.register_blueprint(staff_delete_inquiries)
+app.register_blueprint(customer_faq)
+app.register_blueprint(staff_add_faq)
+app.register_blueprint(staff_delete_faq)
+
 
 
 @app.route('/')

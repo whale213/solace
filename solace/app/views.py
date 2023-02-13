@@ -2,7 +2,6 @@ from flask import Blueprint, render_template
 
 example = Blueprint("example", __name__)
 
-
 # View / Routes for app
 
 @example.route("/")
