@@ -88,6 +88,7 @@ def productFormSettings():
             if result[0] is None:
                 if not inputExists:
                     db.update_table_item(updateInput, (newInput,))
+                    flash(f"Successfully Updated {selected_dropdown} with '{newInput}''.")
                 else:
                     flash(f"{newInput} already exists in database!")
             # Else make a new null row and update the new null value slot with input
@@ -187,6 +188,9 @@ def inventory():
 
 @add_Product.route("/addProduct", methods=["GET", "POST"])
 def addProduct():
+    # Ensure that file path for image can be found to save into
+    if not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
     addProductForm = ProductForm(request.form)
     db = Thriftstore()
     products = db.get_all_items("Products")
@@ -248,6 +252,7 @@ def addProduct():
             productExists = False
             db = Thriftstore()
             products = db.get_all_items("Products")
+            print(os.path)
             # Check if the name, brand and source type matches any existing product in db
             for product in range(len(products)):
                 if products[product][1] == addProductForm.name.data and \

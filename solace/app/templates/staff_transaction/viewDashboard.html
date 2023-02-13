@@ -22,7 +22,9 @@
 <br/><br/><br/>
 <div class="d-flex justify-content-between">
     <p class=" display-6 mx-5">Inventory Products Dashboard</p>
-    <a href="/ProductsRawData" class="reduce p-2 mx-5 fs-4 text-pink btn btn-dark">Download Raw Data</a>
+    {% if products_length > 0 %}
+        <a href="/ProductsRawData" class="reduce p-2 mx-5 fs-4 text-pink btn btn-dark">Download Raw Data</a>
+    {% endif %}
 </div>
 <br/><br/>
 {%if products_length > 0 %}
