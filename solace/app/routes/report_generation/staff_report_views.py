@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, Blueprint
 import sqlite3
-from Thriftstore import *
-from report import Report
-from Forms import ReportDeleteForm
+from models.Thriftstore import Thriftstore
+from models.report import Report
+from forms.report_generation.Forms import ReportDeleteForm
 
 
 
@@ -10,7 +10,6 @@ reporthome = Blueprint("reporthome", __name__)
 reportcreate = Blueprint("reportcreate", __name__)
 reportdelete = Blueprint("reportdelete", __name__)
 reportupdate = Blueprint("reportupdate", __name__)
-
 
 @reporthome.route("/report-generation-home")
 def home():

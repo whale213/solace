@@ -1,4 +1,4 @@
-from Thriftstore import *
+from models.Thriftstore import Thriftstore
 
 
 reportTableAttributes = '''

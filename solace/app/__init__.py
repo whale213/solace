@@ -5,7 +5,8 @@ from models.Thriftstore import Thriftstore
 from routes.customer_support.faq_table import faqTable
 from routes.customer_support.cust_inquiries import solace_homepage, customer_inquiries, staff_read_inquiries, staff_reply_inquiries, staff_delete_inquiries, customer_faq, staff_add_faq, staff_delete_faq
 from routes.customer_support.faq_table import faq_insert_query, f1, f2,f3,f4,f5,f6
-
+from routes.report_generation.staff_report_views import reporthome, reportcreate, reportdelete, reportupdate
+from reportdatabase import reportTableAttributes
 
 app = Flask(__name__)
 app.config["PORT_NUMBER"] = 5000
@@ -22,6 +23,11 @@ app.register_blueprint(customer_faq)
 app.register_blueprint(staff_add_faq)
 app.register_blueprint(staff_delete_faq)
 
+# Blueprint views / routes for app
+app.register_blueprint(reporthome)
+app.register_blueprint(reportcreate)
+app.register_blueprint(reportdelete)
+app.register_blueprint(reportupdate)
 
 
 @app.route('/')
@@ -130,7 +136,9 @@ def user_mydonations():
 
 if __name__ == "__main__":
     # db = Thriftstore()
-
+    # db.create_table("customerinfo", reportTableAttributes)
+    # db.close_connection()
+    
     # db.create_table('faq', faqTable)
 
     # db.insert_into_table(faq_insert_query, f1)
