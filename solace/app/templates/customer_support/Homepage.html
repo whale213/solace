@@ -1,9 +1,214 @@
 {% extends 'includes/_customer_base_guest.html' %}
 {% block title %}Homepage{% endblock %}
 
+
+
+{% block link %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}" />
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+{% endblock %}
+
+
+
+
 {% block content %}
+
+    <!-- HOME -->
+    <section id = 'home' style = 'background-image: url(static/images/solace_homepage.jpg);' class = 'bg-cover hero-section'>
+        <div class = 'overlay'></div>
+        <div class= "container text-center">
+            <div class = 'row'>
+                <div class="col-12" id = 'solacee'>
+                    <h1>Welcome To Solace</h1>
+                    <p>A Singapore based thriftshop giving old clothes new life <br>est. 2021</p>
+                    <a href="#" class = 'btn btn-main'>Sign In</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- NEW ARRIVALS -->
+    <section id = 'arrivals' class = 'text-center'>
+        <div class = 'container'>
+            <div class = 'row gy-4' id = 'the_images' >
+                <div class = 'col-12 new-arrivals-intro text-center'>
+                    <h1>New Arrivals</h1>
+                    <div class = 'divider'></div>
+                    <p>New items in our catalog</p>
+
+                </div>
+
+            
+
+                <div class = 'col-md-3 new-item-bg'>
+                    <div class = 'new-items'>
+                        <div class = 'new-items-imgs mt-3'>
+                            <img src='static/product_images/denim_shorts_uniqlo.jpg' alt="">
+                        </div>
+                        <p>Uniqlo Shorts</p>
+                        <a href="#" class = 'btn btn-main'>View More</a>
+
+                    </div>
+                </div>
+
+                <div class = 'col-md-3 new-item-bg mx-auto'>
+                    <div class = new-items>
+                        <div class = 'new-items-imgs mt-3'>
+                            <img src='static/product_images/puma_liga_leather_trainers_whisper_white.jpg' alt="">
+                        </div>
+                        <p>Puma Trainers</p>
+                        <a href="#" class = 'btn btn-main'>View More</a>
+
+                    </div>
+                </div>
+
+                <div class = 'col-md-3 new-item-bg'>
+                    <div class = new-items>
+                        <div class = 'new-items-imgs mt-3'>
+                            <img src='static/product_images/Nike_Brazil_WC_Away_Shirt.jpeg' alt="">
+                        </div>
+                        <p>Brazil Shirt</p>
+                        <a href="#" class = 'btn btn-main'>View More</a>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <a href="#" class = 'btn btn-main mt-5'>View Catalog</a>
+        
+
+
+
+        </div>
+
+    </section>
+
+    <!-- ABOUT -->
+    <section id = 'about' class = 'bg-cover' style = 'background-image: url(static/images/solace_homepage.jpg);'>
+        <div class = 'overlay'></div>
+        <div class = 'container text-center'>
+            <div class = 'row'>
+                <div class="col-12" id = 'solacee'>
+                    <h1>Donations</h1>
+                    <p>A Singapore based thriftshop giving old clothes new life <br>est. 2021</p>
+                    <a href="#" class = 'btn btn-main'>Learn More</a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+    <!-- REVIEWS -->
+
+  
+
+    <section id = 'reviews' class = 'text-centre'>
+        <div class = 'container'>
+            <div class = 'row gy-4'>
+                <div class = 'col-12 section-intro text-centre'>
+                    <h1>Reviews</h1>
+                    <div class = 'divider'></div>
+                    <p>These are reviews from our loyal customers</p>
+
+                </div>
+
+            </div>
+
+            <div class = 'row gx-4 gy-5 text-start'>
+                <div class = 'col-md-4'>
+                    <div class = 'review p-4 '>
+                        <div class = 'person'>
+                            <img src="static/images/user.png" alt="" class="mb-3">
+                            <div class = 'text ms-3'>
+                                <h6 id = 'person_name'>Ryan Chng</h6>
+                                <p>1st Purchase</p>
+
+                            </div>
+
+                        </div>
+                        <p class = 'mt-2'>Delivery was quick and items were delivered as shown. Will definitely be a returning customer!</p>
+                        <div class = 'stars'>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class = 'col-md-4'>
+                    <div class = 'review p-4 '>
+                        <div class = 'person'>
+                            <img src="static/images/user.png" alt="" class="mb-3">
+                            <div class = 'text ms-3'>
+                                <h6 id = 'person_name'>Russel Lim</h6>
+                                <p>Returning Customer</p>
+
+                            </div>
+
+                        </div>
+                        <p class = 'mt-2'>Delivery was quick and items were delivered as shown. Will definitely be a returning customer!</p>
+                        <div class = 'stars'>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class = 'col-md-4'>
+                    <div class = 'review p-4 '>
+                        <div class = 'person'>
+                            <img src="static/images/user.png" alt="" class="mb-3">
+                            <div class = 'text ms-3'>
+                                <h6 id = 'person_name'>Farhan</h6>
+                                <p>Loyal Customer</p>
+
+                            </div>
+
+                        </div>
+                        <p class = 'mt-2'>Delivery was quick and items were delivered as shown. Will definitely be a returning customer!</p>
+                        <div class = 'stars'>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                            <i class='bx bxs-star'></i>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
 
 
 
 
 {% endblock %}
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src = 'static/js/AOS.js'></script>
+
