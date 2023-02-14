@@ -72,6 +72,19 @@ body {
 .shadow-none {
     box-shadow: none!important;
 }
+td      {padding: 10px;
+         padding-right: 200px;
+}
+th      {padding: 10px;
+}
+tr      {padding: 10px;
+}
+
+table   {margin: -10px 0px;
+         border: 2px;
+         text-align: center;
+         font-size: large;
+}
 </style>
  <div class="container">
 
@@ -128,7 +141,35 @@ body {
               <form>
                 <div class="form-group">
                   <label class="d-block mb-0">Payment Method</label>
-                  <div class="small text-muted mb-3">You have not added a payment method</div>
+
+                  <br>
+                  <table>
+                    {% for id in users %}
+                    <tr>
+                      <td>{{ id }}</td>
+                      <td>
+                        <form>
+                          <input type="hidden" name="id" value="{{ id }}">
+                          <br>
+                          <br>
+                          </form>
+                        </td>
+                      </form>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <table>
+                  <tr>
+                    <td>{{ user_info[8] }}</td>
+
+                    <td>
+                      <form action="/addressdelete" method="post" onsubmit = "return confirm('Are you sure you want to delete this card?');">
+                        <input type="hidden" name="email" value="{{ session[email] }}">
+                        <input type="submit" value="Delete Card" class = 'btn btn-danger mb-3'>
+                    </td>
+                  </tr>
+                </table>
+                <br>
                   <button class="btn btn-info" type="button">Add Payment Method</button>
                 </div>
                 <br>

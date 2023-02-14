@@ -210,18 +210,39 @@ def updateprofile():
 @app.route("/paymentmethods")
 def user_paymentmethods():
     db = Thriftstore()
-    users = db.get_all_items("Users")
+    db_cur = db.get_cursor()
+    print(session["email"]) 
+    user_info = 0
+    data = db_cur.execute("SELECT * FROM Users").fetchall()
+    for row in data:
+        # print(row)
+        if row[2] == session["email"]:
+            user_info = row
+    
+    # Loop through all user data in db
+    # check if session email equal to any in data
+    # if have then append to user data
     db.close_connection()
+    return render_template("account_management/payment_methods.html", user_info=user_info)
+    
 
-    return render_template("account_management/payment_methods.html", users = users)
-
-@app.route("/savedaddresses")
+@app.route("/saved_addresses")
 def user_savedaddresses():
     db = Thriftstore()
-    users = db.get_all_items("Users")
+    db_cur = db.get_cursor()
+    print(session["email"]) 
+    user_info = 0
+    data = db_cur.execute("SELECT * FROM Users").fetchall()
+    for row in data:
+        # print(row)
+        if row[2] == session["email"]:
+            user_info = row
+    
+    # Loop through all user data in db
+    # check if session email equal to any in data
+    # if have then append to user data
     db.close_connection()
-
-    return render_template("account_management/saved_addresses.html", users = users)  
+    return render_template("account_management/saved_addresses.html", user_info=user_info) 
 
 @app.route("/orderhistory")
 def user_orderhistory():
@@ -258,6 +279,39 @@ def user_delete():
     db.close_connection()
 
     return redirect("/login")
+
+@app.route("/carddelete", methods=["POST", "GET"])
+def card_delete():
+    db = Thriftstore()
+    db_cur = db.get_cursor()
+    print(session["email"]) 
+    data = db_cur.execute("SELECT * FROM Users").fetchall()
+    for row in data:
+        if row[2] == session["email"]:
+            address = row[8]
+    
+    # db.delete_by_id_from_table('Users','addresses', user_id)
+    db.delete_by_id_from_table("Users", "addresses", address)
+    db.close_connection()
+
+    return redirect("/saved_addresses") 
+
+
+@app.route("/addressdelete", methods=["POST", "GET"])
+def address_delete():
+    db = Thriftstore()
+    db_cur = db.get_cursor()
+    print(session["email"]) 
+    data = db_cur.execute("SELECT * FROM Users").fetchall()
+    for row in data:
+        if row[2] == session["email"]:
+            address = row[7]
+    
+    # db.delete_by_id_from_table('Users','addresses', user_id)
+    db.delete_by_id_from_table("Users", "addresses", address)
+    db.close_connection()
+
+    return redirect("/saved_addresses")    
 
 
 
